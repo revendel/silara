@@ -1,0 +1,24 @@
+---
+/**
+ * Line / Divider component.
+ * WordPress equivalent: divider template part.
+ * Renders as a 3 px horizontal rule using the --lines colour token.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['line', className]} data-line role="separator" aria-hidden="true"></div>
+
+<style>
+  .line {
+    width: 100%;
+    height: 0;
+    border-top: var(--scale-2) solid var(--lines);
+    flex-shrink: 0;
+    transform-origin: left center;
+  }
+</style>

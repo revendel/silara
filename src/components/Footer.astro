@@ -1,0 +1,69 @@
+---
+/**
+ * Footer component.
+ * WordPress equivalent: footer.php / get_footer().
+ *
+ * Large screen: inactive (icon-only) logo left + legal/nav links right.
+ * Small screen: stacked column layout.
+ */
+import Logo from './Logo.astro';
+---
+
+<footer class="site-footer" transition:name="site-footer" transition:animate="none">
+  <Logo variant="inactive" />
+
+  <nav class="site-footer__links" aria-label="Footer navigation">
+    <ul class="site-footer__link-list" role="list">
+      <li><a href="/terms"   class="site-footer__link">T&amp;C</a></li>
+      <li><a href="/privacy" class="site-footer__link">Privacy</a></li>
+      <li><span class="site-footer__link">GSTIN: 19CTHPM0710P1ZC</span></li>
+      <li><span class="site-footer__link">Silara Enterprises</span></li>
+    </ul>
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--scale-7) var(--scale-8);
+    border-bottom: var(--scale-2) solid var(--lines);
+    background-color: var(--base);
+    flex-shrink: 0;
+  }
+
+  .site-footer__link-list {
+    display: flex;
+    align-items: center;
+    gap: var(--scale-6);
+    list-style: none;
+  }
+
+  .site-footer__link {
+    font-size: var(--scale-5); /* 13px — reduced in Figma */
+    line-height: var(--scale-6);
+    padding: var(--scale-4);
+    transition: opacity 0.15s ease;
+  }
+
+  a.site-footer__link:hover {
+    opacity: 0.5;
+  }
+
+  /* ── Tablet/mobile: stacked column ── */
+  @media (max-width: 1023px) {
+    .site-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--scale-6);
+      padding: var(--scale-7);
+    }
+
+    .site-footer__link-list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--scale-4);
+    }
+  }
+</style>

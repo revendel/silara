@@ -1,0 +1,403 @@
+---
+/**
+ * Vision page — "Intro Desktop" (node 722:219)
+ * WordPress equivalent: front-page.php
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Line from '../components/Line.astro';
+---
+
+<BaseLayout
+  title="Our Vision"
+  description="Silara SuperFoods — nutrient-dense superfoods built for modern life. Foods that sustain us through smarter, cleaner nutrition."
+>
+  <!-- JSON-LD Organisation schema for SEO -->
+  <script type="application/ld+json" slot="head">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Silara SuperFoods",
+      "url": "https://silara.org",
+      "description": "Nutrient-dense superfoods built for modern life.",
+      "email": "contact@silara.org"
+    }
+  </script>
+
+  <section class="vision" aria-label="Our Vision">
+
+    <!-- ── Title block ───────────────────────────────────────── -->
+    <div class="vision__title-section">
+      <div class="vision__title-block">
+        <h1 class="vision__headline" data-animate="headline">Our Vision</h1>
+        <p  class="vision__subheadline" data-animate="subheadline">Superfoods for a stronger planet.</p>
+      </div>
+      <Line />
+    </div>
+    <Line />
+
+    <!-- ── Content body ──────────────────────────────────────── -->
+    <div class="vision__body">
+
+      <!-- Left: big image -->
+      <div class="vision__big-image" data-animate="image-left">
+        <img
+          src="/images/vision-hero.jpg"
+          alt="Harvested makhana in a field"
+          class="vision__big-image-img"
+          width="982"
+          height="569"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <!-- Right: text content -->
+      <div class="vision__content" data-animate="content-right">
+
+        <div class="vision__content-top">
+
+          <!-- Description paragraph -->
+          <div class="vision__description">
+            <p>
+              As humanity looks toward the future, the foods that sustain us
+              must become smarter, cleaner, and more powerful. Silara draws
+              inspiration from the kind of nutrition that could fuel the next
+              generation of exploration — compact, nutrient-dense, and built
+              for performance.
+            </p>
+          </div>
+
+          <!-- Small image + slogan -->
+          <div class="vision__slogan">
+            <div class="vision__slogan-image">
+              <img
+                src="/images/vision-slogan.jpg"
+                alt="Makhana superfood close-up"
+                class="vision__slogan-image-img"
+                width="390"
+                height="258"
+                loading="eager"
+              />
+            </div>
+            <p class="vision__slogan-text">Food for the next frontier.</p>
+          </div>
+
+        </div>
+
+        <!-- Legal / trademark line -->
+        <p class="vision__legal">
+          Silara SuperFoods is a trademark of Silara Enterprises and
+          unauthorized use is prohibited by law. Reach us at
+          <a href="mailto:contact@silara.org">contact@silara.org</a>
+          for any feedback or inquiries.
+        </p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Page fill: takes the full flex area between header & footer ── */
+  .vision {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ── Title section ───────────────────────────────────────────── */
+  .vision__title-section {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--scale-7); /* 34px after first line */
+  }
+
+  .vision__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-5); /* 13px */
+    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8);
+    /* 55px top/bottom, 55px left */
+  }
+
+  .vision__headline {
+    font-size: clamp(var(--scale-8), 5vw, var(--scale-9)); /* 55–89px fluid — Figma Hero style */
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .vision__subheadline {
+    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid — Figma H1 style */
+    line-height: var(--scale-7); /* 34px — proportional to text size */
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  /* ── Content body ─────────────────────────────────────────────── */
+  .vision__body {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--scale-6); /* 21px */
+    padding-right: var(--scale-8); /* 55px — matches footer right padding */
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Left image column — fixed proportion from Figma (982/1728 ≈ 57%) */
+  .vision__big-image {
+    flex-shrink: 0;
+    width: 56.8%;
+    max-width: 982px;
+    min-height: 250px;
+    align-self: stretch;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vision__big-image-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Right content column */
+  .vision__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .vision__content-top {
+    display: flex;
+    gap: var(--scale-6); /* 21px */
+    align-items: flex-start;
+  }
+
+  /* Description — left half of right column */
+  .vision__description {
+    flex: 1;
+    padding-top: var(--scale-4); /* 8px — was scale-6/21px */
+    font-size: var(--scale-6);  /* 21px */
+    line-height: var(--scale-6);
+    min-width: 0;
+  }
+
+  /* Slogan — right half of right column */
+  .vision__slogan {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-5); /* 13px — was scale-6/21px */
+    min-width: 0; /* was 390px — removed hard constraint */
+  }
+
+  .vision__slogan-image {
+    position: relative;
+    flex: 1;
+    min-height: 250px;
+    max-height: 240px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .vision__slogan-image-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top; /* matches Figma top-crop */
+  }
+
+  .vision__slogan-text {
+    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid — Figma H1 style */
+    line-height: var(--scale-7); /* 34px — was scale-8/55px */
+    text-transform: capitalize;
+    font-weight: 400;
+  }
+
+  /* Legal line — bottom of right column */
+  .vision__legal {
+    font-size: var(--scale-5); /* 13px */
+    line-height: var(--scale-5);
+    max-width: 662px;
+    flex-shrink: 0;
+    padding-bottom: var(--scale-4); /* 8px — was scale-6/21px */
+  }
+
+  .vision__legal a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── Tablet (744 – 1023 px) ───────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .vision {
+      height: auto;
+      overflow: visible;
+    }
+
+    .vision__title-section {
+      padding-bottom: 0;
+    }
+
+    .vision__title-block {
+      padding: var(--scale-8) var(--scale-7);
+      gap: var(--scale-6);
+    }
+
+    .vision__headline {
+      font-size: var(--scale-8); /* 55px */
+    }
+
+    .vision__subheadline {
+      font-size: var(--scale-7); /* 34px */
+      line-height: var(--scale-7);
+    }
+
+    .vision__body {
+      flex-direction: column;
+      padding-right: 0;
+      overflow: visible;
+      gap: 0;
+    }
+
+    .vision__big-image {
+      width: 100%;
+      max-width: none;
+      height: 569px;
+      position: relative; /* restore from absolute img trick */
+    }
+
+    .vision__content {
+      padding: var(--scale-7);
+      gap: var(--scale-7);
+      justify-content: flex-start;
+    }
+
+    .vision__content-top {
+      flex-direction: column;
+    }
+
+    .vision__description {
+      order: 2; /* moves below slogan on tablet/mobile */
+    }
+
+    .vision__slogan {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .vision__slogan-image {
+      min-height: 350px;
+      max-height: 350px;
+    }
+
+    .vision__slogan-text {
+      font-size: var(--scale-8); /* 55px on tablet */
+      line-height: var(--scale-8);
+      max-width: 390px;
+    }
+
+    .vision__legal {
+      max-width: none;
+      font-size: var(--scale-6); /* 21px on tablet */
+      line-height: var(--scale-6);
+    }
+  }
+
+  /* ── Mobile (≤ 600 px) ────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .vision__title-block {
+      padding: var(--scale-7) var(--scale-6);
+    }
+
+    .vision__headline {
+      font-size: clamp(var(--scale-7), 12vw, var(--scale-8)); /* 34–55px fluid */
+    }
+
+    .vision__subheadline {
+      font-size: var(--scale-6); /* 21px */
+      line-height: var(--scale-6);
+    }
+
+    .vision__big-image {
+      height: 341px;
+    }
+
+    .vision__slogan-image {
+      height: 258px;
+    }
+
+    .vision__slogan-text {
+      font-size: var(--scale-7); /* 34px */
+      line-height: var(--scale-7);
+    }
+  }
+</style>
+
+<script>
+  import { animate, inView } from 'motion';
+
+  function initVisionAnimations() {
+    const headline    = document.querySelector<HTMLElement>('[data-animate="headline"]');
+    const subheadline = document.querySelector<HTMLElement>('[data-animate="subheadline"]');
+    const imageLeft   = document.querySelector<HTMLElement>('[data-animate="image-left"]');
+    const contentRight = document.querySelector<HTMLElement>('[data-animate="content-right"]');
+    const lines       = document.querySelectorAll<HTMLElement>('[data-line]');
+
+    if (!headline) return;
+
+    // Lines: draw left to right with stagger
+    lines.forEach((line, i) => {
+      line.style.transformOrigin = 'left center';
+      animate(
+        line,
+        { scaleX: [0, 1] },
+        { duration: 0.9, delay: 0.1 + i * 0.12, easing: [0.22, 1, 0.36, 1] }
+      );
+    });
+
+    // Headline: clip-path wipe up + opacity
+    animate(
+      headline,
+      { opacity: [0, 1], y: [30, 0] },
+      { duration: 0.7, easing: [0.22, 1, 0.36, 1] }
+    );
+
+    // Subheadline: follows headline with a short delay
+    animate(
+      subheadline!,
+      { opacity: [0, 1], y: [20, 0] },
+      { duration: 0.6, delay: 0.15, easing: [0.22, 1, 0.36, 1] }
+    );
+
+    // Big image: slides in from left
+    animate(
+      imageLeft!,
+      { opacity: [0, 1], x: [-30, 0] },
+      { duration: 0.7, delay: 0.25, easing: [0.22, 1, 0.36, 1] }
+    );
+
+    // Content block: slides in from right
+    animate(
+      contentRight!,
+      { opacity: [0, 1], x: [30, 0] },
+      { duration: 0.7, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
+    );
+  }
+
+  // Runs on first page load and after every View Transition navigation
+  document.addEventListener('astro:page-load', initVisionAnimations);
+</script>

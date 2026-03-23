@@ -1,0 +1,17 @@
+:root {
+  /* Fibonacci scale — mirrors Figma Variables exactly */
+  --scale-2:  3px;    /* border width       */
+  --scale-3:  5px;    /* micro gap          */
+  --scale-4:  8px;    /* small padding      */
+  --scale-5:  13px;   /* fine print / label */
+  --scale-6:  21px;   /* body paragraph     */
+  --scale-7:  34px;   /* h3 / nav links     */
+  --scale-8:  55px;   /* h2 / subtitles     */
+  --scale-9:  89px;   /* section spacing    */
+  --scale-10: 144px;  /* hero display       */
+
+  /* Colours */
+  --primary: #1d1d1d;
+  --base:    #ffffff;
+  --lines:   #d6d6d6;
+}

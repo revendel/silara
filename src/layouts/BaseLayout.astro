@@ -1,0 +1,94 @@
+---
+/**
+ * BaseLayout — HTML shell for every page.
+ * WordPress equivalent: functions.php + get_header() / get_footer() wrappers.
+ */
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MenuOverlay from '../components/MenuOverlay.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Silara SuperFoods — nutrient-dense superfoods built for modern life.',
+  ogImage = '/images/og-default.jpg',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL   = new URL(ogImage, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content={`${title} — Silara SuperFoods`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:image"       content={ogImageURL} />
+    <meta property="og:site_name"   content="Silara SuperFoods" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={`${title} — Silara SuperFoods`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title} — Silara SuperFoods</title>
+
+    <!-- Astro View Transitions: client-side routing + smooth page transitions -->
+    <ClientRouter />
+
+    <!-- Per-page head additions (JSON-LD, extra meta, etc.) -->
+    <slot name="head" />
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- WordPress: get_header() -->
+      <Header />
+
+      <!-- WordPress: the_content() / page template -->
+      <main class="page__main" id="main-content">
+        <slot />
+      </main>
+
+      <!-- WordPress: get_footer() -->
+      <Footer />
+    </div>
+
+    <!-- Mobile / tablet slide-in nav overlay -->
+    <MenuOverlay />
+
+    <script>
+      import { animate } from 'motion';
+
+      // Fade + lift the main content on every page load / navigation
+      document.addEventListener('astro:page-load', () => {
+        const main = document.getElementById('main-content');
+        if (main) {
+          animate(
+            main,
+            { opacity: [0, 1], y: [10, 0] },
+            { duration: 0.4, easing: [0.4, 0, 0.2, 1] }
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

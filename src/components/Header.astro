@@ -1,0 +1,130 @@
+---
+/**
+ * Header component.
+ * WordPress equivalent: header.php / get_header().
+ *
+ * Desktop (≥ 1024 px): Logo left + inline nav links right.
+ * Mobile  (< 1024 px): Logo left + "Other Pages" pill button right
+ *                       → triggers MenuOverlay.
+ */
+import Logo from './Logo.astro';
+import Line from './Line.astro';
+
+const navLinks = [
+  { href: '/',            label: 'Vision'      },
+  { href: '/mission',     label: 'Mission'     },
+  { href: '/our-product', label: 'Our Product' },
+  { href: '/the-future',  label: 'The Future'  },
+  { href: '/contact',     label: 'Contact'     },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header" transition:name="site-header" transition:animate="none">
+  <div class="site-header__inner">
+    <Logo />
+
+    <!-- Desktop nav -->
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <ul class="site-header__nav-list" role="list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'site-header__nav-link',
+                { 'is-active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Mobile: "Other Pages" pill button -->
+    <button
+      class="site-header__menu-btn"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="menu-overlay"
+      id="menu-toggle"
+    >
+      Other Pages
+    </button>
+  </div>
+  <Line />
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--base);
+    flex-shrink: 0;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--scale-7) var(--scale-8);
+  }
+
+  /* ── Desktop nav ── */
+  .site-header__nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--scale-6);
+    list-style: none;
+  }
+
+  .site-header__nav-link {
+    font-size: var(--scale-6); /* 21px */
+    line-height: var(--scale-7);
+    padding: var(--scale-4);
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+  }
+
+  .site-header__nav-link:hover {
+    opacity: 0.5;
+  }
+
+  .site-header__nav-link.is-active {
+    opacity: 0.5;
+  }
+
+  /* ── Mobile pill ── */
+  .site-header__menu-btn {
+    display: none;
+    font-size: var(--scale-7);
+    line-height: var(--scale-7);
+    color: var(--base);
+    background-color: var(--primary);
+    padding: var(--scale-5) var(--scale-6);
+    border-radius: var(--scale-9);
+    transition: opacity 0.15s ease;
+  }
+
+  .site-header__menu-btn:hover {
+    opacity: 0.75;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1023px) {
+    .site-header__inner {
+      padding: var(--scale-7);
+    }
+
+    .site-header__nav {
+      display: none;
+    }
+
+    .site-header__menu-btn {
+      display: block;
+    }
+  }
+</style>

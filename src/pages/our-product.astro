@@ -1,0 +1,172 @@
+---
+/**
+ * Our Product page — "Product Desktop" (Figma node 737:519)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Our Product"
+  description="Silara SuperFoods — our first superfood launch. Popped lotus seeds, clean plant protein, built for modern life."
+>
+  <section class="product" aria-label="Our Product">
+
+    <!-- Image -->
+    <div class="product__image-container" data-animate="product-image">
+      <img
+        src="/images/product-hero.png"
+        alt="Silara makhana pouch packaging"
+        class="product__image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <!-- Headline + table -->
+    <div class="product__content-row" data-animate="product-content">
+
+      <h2 class="product__headline">Our first superfood launch</h2>
+
+      <div class="product__table">
+        <div class="product__table-header">Details</div>
+        <div class="product__table-body">
+
+          <div class="product__table-col product__table-col--labels">
+            <div class="product__table-row">Description</div>
+            <div class="product__table-row">Details</div>
+            <div class="product__table-row">Status</div>
+          </div>
+
+          <div class="product__table-col product__table-col--values">
+            <div class="product__table-row">Popped lotus seeds</div>
+            <div class="product__table-row">
+              Foxnuts, also known as lotus seeds, are airy light and delicately
+              crunchy. Naturally rich in plant protein, fiber, and essential
+              minerals, they offer clean, sustained superfood energy.
+            </div>
+            <div class="product__table-row">Available for orders now</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initProductAnimations() {
+    const image   = document.querySelector<HTMLElement>('[data-animate="product-image"]');
+    const content = document.querySelector<HTMLElement>('[data-animate="product-content"]');
+    if (!image) return;
+    animate(image, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, delay: 0.1, easing: [0.16, 1, 0.3, 1] as const });
+    if (content) animate(content, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.4, easing: [0.22, 1, 0.36, 1] as const });
+  }
+
+  document.addEventListener('astro:page-load', initProductAnimations);
+</script>
+
+<style>
+  .product {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-10);
+    padding: 0 var(--scale-8) var(--scale-8);
+  }
+
+  /* 407px tall container, image rotated inside */
+  .product__image-container {
+    height: 270px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .product__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+  }
+
+  /* Headline (737px wide) + table, 125px apart */
+  .product__content-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 125px;
+    flex-shrink: 0;
+  }
+
+  .product__headline {
+    flex-shrink: 0;
+    width: min(737px, 44%);
+    font-size: var(--scale-9);
+    line-height: var(--scale-9);
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .product__table {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .product__table-header {
+    padding: var(--scale-4) var(--scale-4) var(--scale-6);
+    border-bottom: var(--scale-2) solid var(--lines);
+    font-size: var(--scale-6);
+    line-height: var(--scale-7);
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  .product__table-body {
+    display: flex;
+    width: 100%;
+  }
+
+  .product__table-col--labels { flex-shrink: 0; }
+  .product__table-col--values { flex: 1; min-width: 0; }
+
+  .product__table-row {
+    padding: var(--scale-6) var(--scale-9) var(--scale-6) var(--scale-4);
+    border-bottom: var(--scale-2) solid var(--lines);
+    font-size: var(--scale-6);
+    line-height: var(--scale-6);
+    font-weight: 400;
+  }
+
+  /* Tablet */
+  @media (max-width: 1023px) {
+    .product {
+      padding: var(--scale-7);
+      gap: var(--scale-8);
+    }
+    .product__image-container { height: 320px; }
+    .product__content-row {
+      flex-direction: column;
+      gap: var(--scale-8);
+    }
+    .product__headline {
+      width: 100%;
+      font-size: var(--scale-8);
+      line-height: var(--scale-8);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 743px) {
+    .product {
+      padding: var(--scale-6);
+      gap: var(--scale-7);
+    }
+    .product__image-container { height: 260px; }
+    .product__headline { font-size: clamp(var(--scale-7), 10vw, var(--scale-8)); }
+    .product__table-col--labels { display: none; }
+    .product__table-row { padding-right: var(--scale-6); }
+  }
+</style>

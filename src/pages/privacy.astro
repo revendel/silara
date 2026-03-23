@@ -1,0 +1,233 @@
+---
+/**
+ * Privacy Policy page — "Privacy Desktop" (Figma node 753:2181)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Line from '../components/Line.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy | Silara SuperFoods"
+  description="Silara Enterprises — Privacy Policy covering data collection, WhatsApp communication, and your rights."
+  robots="noindex, follow"
+>
+  <section class="pp" aria-label="Privacy Policy">
+
+    <!-- Big title area -->
+    <div class="pp__title-section" data-animate="pp-title">
+      <div class="pp__heading-block">
+        <h1 class="pp__headline">Privacy Policy</h1>
+        <p class="pp__subheadline">For Silara Enterprises In April 2026</p>
+      </div>
+      <div class="pp__divider"><Line /></div>
+    </div>
+
+    <!-- 3-column grid -->
+    <div class="pp__grid" data-animate="pp-grid">
+
+      <!-- Column 1 -->
+      <div class="pp__col">
+        <div class="pp__section">
+          <h2 class="pp__section-title">Our Enterprise</h2>
+          <p class="pp__section-body">
+            ("we," "our," or "us") is committed to protecting your privacy. This
+            policy explains how we handle your data for our business.
+          </p>
+        </div>
+        <div class="pp__section">
+          <h2 class="pp__section-title">Data Collection</h2>
+          <p class="pp__section-body">
+            We collect your name, phone number, and delivery address to fulfill
+            orders and provide customer support via WhatsApp.
+          </p>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="pp__col">
+        <div class="pp__section">
+          <h2 class="pp__section-title">WhatsApp Communication</h2>
+          <p class="pp__section-body">
+           By sharing your phone number, you agree to receive order updates, tracking details, and marketing messages via WhatsApp Business.
+          </p>
+        </div>
+        <div class="pp__section">
+          <h2 class="pp__section-title">Data Sharing</h2>
+          <p class="pp__section-body">
+           We share your data with Meta (for WhatsApp) and logistics partners (for delivery), but never sell it to third parties.
+          </p>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="pp__col">
+        <div class="pp__section">
+          <h2 class="pp__section-title">Your Rights</h2>
+          <p class="pp__section-body">
+            You may opt-out of marketing messages at any time by replying "STOP"
+            to any WhatsApp message we send. To request data deletion, contact us
+            at contact@silara.org.
+          </p>
+        </div>
+        <div class="pp__section">
+          <h2 class="pp__section-title">Legal Compliance</h2>
+          <p class="pp__section-body">
+            We comply with Indian data protection laws and relevant international
+            guidelines for our export markets.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initPPAnimations() {
+    // Header line
+    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+    if (headerLine) {
+      headerLine.style.transformOrigin = 'left center';
+      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Title block: fade + lift
+    const titleSection = document.querySelector<HTMLElement>('[data-animate="pp-title"]');
+    if (titleSection) {
+      animate(titleSection, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Divider line below title: scaleX left to right
+    const divider = document.querySelector<HTMLElement>('.pp__divider [data-line]');
+    if (divider) {
+      divider.style.transformOrigin = 'left center';
+      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Grid sections: staggered fade + lift
+    const sections = document.querySelectorAll<HTMLElement>('.pp__section');
+    sections.forEach((section, i) => {
+      animate(section, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.07, easing: [0.22, 1, 0.36, 1] as const });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPPAnimations);
+</script>
+
+<style>
+  .pp {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* ── Title section ── */
+  .pp__title-section {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--scale-7); /* 34px */
+  }
+
+  .pp__heading-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-5); /* 13px */
+    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8); /* 55px top/bottom, 55px left */
+  }
+
+  .pp__headline {
+    font-size: clamp(var(--scale-8), 5vw, var(--scale-9)); /* 55–89px fluid */
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .pp__subheadline {
+    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid */
+    line-height: var(--scale-7); /* 34px */
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  /* ── 3-column content grid ── */
+  .pp__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 377px));
+    column-gap: var(--scale-7);  /* 34px between columns */
+    row-gap: var(--scale-8);
+    padding: 0 0 var(--scale-9) var(--scale-8);
+    justify-content: start;
+  }
+
+  .pp__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-8);         /* 55px between sections in a column */
+  }
+
+  /* ── Individual section ── */
+  .pp__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pp__section-title {
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-7); /* 34px */
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: var(--scale-6) var(--scale-4) var(--scale-3);
+  }
+
+  .pp__section-body {
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-6); /* 21px */
+    font-weight: 400;
+    padding: var(--scale-6) var(--scale-4) var(--scale-6) var(--scale-4);
+  }
+
+  /* ── Tablet ── */
+  @media (max-width: 1023px) {
+    .pp__heading-block {
+      padding: var(--scale-8) var(--scale-7) var(--scale-8) var(--scale-7);
+      gap: var(--scale-5);
+    }
+
+    .pp__divider {
+      display: none;
+    }
+
+    .pp__grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 var(--scale-7) var(--scale-9) var(--scale-7);
+      gap: var(--scale-7);
+    }
+
+    .pp { flex: unset; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 743px) {
+    .pp__heading-block {
+      padding: var(--scale-7) var(--scale-6) var(--scale-7) var(--scale-6);
+    }
+
+    .pp__grid {
+      grid-template-columns: 1fr;
+      padding: 0 var(--scale-6) var(--scale-8) var(--scale-6);
+      gap: var(--scale-7);
+    }
+
+    .pp__col {
+      gap: var(--scale-7);
+    }
+
+    .pp__section-body {
+      padding-right: var(--scale-7);
+    }
+  }
+</style>

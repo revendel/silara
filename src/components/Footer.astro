@@ -20,6 +20,13 @@ import Logo from './Logo.astro';
       <li><span class="site-footer__link">Silara Enterprises</span></li>
     </ul>
   </nav>
+
+  <p class="site-footer__legal">
+    Silara SuperFoods is a trademark of Silara Enterprises and
+    unauthorized use is prohibited by law. Reach us at
+    <a href="mailto:contact@silara.org">contact@silara.org</a>
+    for any feedback or inquiries.
+  </p>
 </footer>
 
 <style>
@@ -27,7 +34,8 @@ import Logo from './Logo.astro';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--scale-7) var(--scale-8);
+    padding: 0 var(--scale-8);
+    height: var(--scale-9);
     border-bottom: var(--scale-2) solid var(--lines);
     background-color: var(--base);
     flex-shrink: 0;
@@ -52,18 +60,42 @@ import Logo from './Logo.astro';
   }
 
   /* ── Tablet/mobile: stacked column ── */
+  .site-footer__legal {
+    display: none;
+  }
+
   @media (max-width: 1023px) {
     .site-footer {
+      height: auto;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--scale-6);
-      padding: var(--scale-7);
+      padding: var(--scale-10) var(--scale-7) var(--scale-9);
+      border-bottom: none;
     }
 
     .site-footer__link-list {
       flex-direction: column;
       align-items: flex-start;
       gap: var(--scale-4);
+    }
+
+    .site-footer__link {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .site-footer__legal {
+      display: block;
+      font-size: var(--scale-5);
+      line-height: var(--scale-5);
+      font-weight: 400;
+      max-width: 268px;
+    }
+
+    .site-footer__legal a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
   }
 </style>

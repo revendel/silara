@@ -1,0 +1,1 @@
+import{a as n}from"./index.DTstjLaA.js";document.addEventListener("astro:page-load",()=>{const t=document.getElementById("main-content");t&&n(t,{opacity:[0,1],y:[10,0]},{duration:.4,easing:[.4,0,.2,1]});const e=document.querySelector("header [data-line]");e&&(e.style.transformOrigin="left center",n(e,{scaleX:[0,1]},{duration:1,easing:[.22,1,.36,1]}))});

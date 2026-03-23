@@ -1,0 +1,235 @@
+---
+/**
+ * Terms & Conditions page — "T&C Desktop" (Figma node 751:1004)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Line from '../components/Line.astro';
+---
+
+<BaseLayout
+  title="Terms & Conditions | Silara SuperFoods"
+  description="Silara Enterprises — Terms & Conditions for orders, shipping, refunds, and governing law."
+  robots="noindex, follow"
+>
+  <section class="tc" aria-label="Terms and Conditions">
+
+    <!-- Big title area -->
+    <div class="tc__title-section" data-animate="tc-title">
+      <div class="tc__heading-block">
+        <h1 class="tc__headline">Terms &amp; Conditions</h1>
+        <p class="tc__subheadline">For Silara Enterprises</p>
+      </div>
+      <div class="tc__divider"><Line /></div>
+    </div>
+
+    <!-- 3-column grid -->
+    <div class="tc__grid" data-animate="tc-grid">
+
+      <!-- Column 1 -->
+      <div class="tc__col">
+        <div class="tc__section">
+          <h2 class="tc__section-title">Business Details</h2>
+          <p class="tc__section-body">
+            Silara Enterprises is a registered business based in Kolkata, India,
+            GSTIN: 19CTHPM0710P1ZC
+          </p>
+        </div>
+        <div class="tc__section">
+          <h2 class="tc__section-title">Orders &amp; Payments</h2>
+          <p class="tc__section-body">
+            All orders are subject to availability. For international bulk orders
+            (B2B), separate commercial invoices and export terms apply.
+          </p>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="tc__col">
+        <div class="tc__section">
+          <h2 class="tc__section-title">Shipping &amp; Delivery</h2>
+          <p class="tc__section-body">
+            We provide end-to-end delivery tracking via WhatsApp. Delivery
+            timelines are estimates and may vary based on customs and courier
+            schedules.
+          </p>
+        </div>
+        <div class="tc__section">
+          <h2 class="tc__section-title">Refunds &amp; Returns</h2>
+          <p class="tc__section-body">
+            Due to the perishable nature of food products, returns are
+            only accepted for damaged reported within 48 hours
+            of delivery.
+          </p>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="tc__col">
+        <div class="tc__section">
+          <h2 class="tc__section-title">Limitation of Liability</h2>
+          <p class="tc__section-body">
+            Silara Enterprises is not liable for delays caused by third-party
+            logistics or customs clearance in international markets.
+          </p>
+        </div>
+        <div class="tc__section">
+          <h2 class="tc__section-title">Governing Law</h2>
+          <p class="tc__section-body">
+            These terms are governed by the laws of West Bengal, India.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initTCAnimations() {
+    // Header line
+    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+    if (headerLine) {
+      headerLine.style.transformOrigin = 'left center';
+      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Title block: fade + lift
+    const titleSection = document.querySelector<HTMLElement>('[data-animate="tc-title"]');
+    if (titleSection) {
+      animate(titleSection, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Divider line below title: scaleX left to right
+    const divider = document.querySelector<HTMLElement>('.tc__divider [data-line]');
+    if (divider) {
+      divider.style.transformOrigin = 'left center';
+      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Grid sections: staggered fade + lift
+    const sections = document.querySelectorAll<HTMLElement>('.tc__section');
+    sections.forEach((section, i) => {
+      animate(section, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.07, easing: [0.22, 1, 0.36, 1] as const });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initTCAnimations);
+</script>
+
+<style>
+  .tc {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* ── Title section ── */
+  .tc__title-section {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--scale-7); /* 34px — matches Vision */
+  }
+
+  .tc__heading-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-5); /* 13px — matches Vision */
+    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8); /* 55px top/bottom, 55px left */
+  }
+
+  .tc__headline {
+    font-size: clamp(var(--scale-8), 5vw, var(--scale-9)); /* 55–89px fluid — matches Vision */
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .tc__subheadline {
+    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid — matches Vision */
+    line-height: var(--scale-7); /* 34px */
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  /* ── 3-column content grid ── */
+  .tc__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 377px));
+    column-gap: var(--scale-7);  /* 34px between columns */
+    row-gap: var(--scale-8);
+    padding: 0 0 var(--scale-9) var(--scale-8);
+    justify-content: start;
+  }
+
+  .tc__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-8);         /* 55px between sections in a column */
+  }
+
+  /* ── Individual T&C section ── */
+  .tc__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tc__section-title {
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-7); /* 34px */
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: var(--scale-6) var(--scale-4) var(--scale-3);
+  }
+
+  .tc__section-body {
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-6); /* 21px */
+    font-weight: 400;
+    padding: var(--scale-6) var(--scale-4) var(--scale-6) var(--scale-4);
+  }
+
+  /* ── Tablet ── */
+  @media (max-width: 1023px) {
+    .tc__heading-block {
+      padding: var(--scale-8) var(--scale-7) var(--scale-8) var(--scale-7);
+      gap: var(--scale-5);
+    }
+
+    .tc__divider {
+      display: none;
+    }
+
+    .tc__grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 var(--scale-7) var(--scale-9) var(--scale-7);
+      gap: var(--scale-7);
+    }
+
+    .tc { flex: unset; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 743px) {
+    .tc__heading-block {
+      padding: var(--scale-7) var(--scale-6) var(--scale-7) var(--scale-6);
+    }
+
+    .tc__grid {
+      grid-template-columns: 1fr;
+      padding: 0 var(--scale-6) var(--scale-8) var(--scale-6);
+      gap: var(--scale-7);
+    }
+
+    .tc__col {
+      gap: var(--scale-7);
+    }
+
+    .tc__section-body {
+      padding-right: var(--scale-7);
+    }
+  }
+</style>

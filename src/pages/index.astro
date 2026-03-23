@@ -8,8 +8,9 @@ import Line from '../components/Line.astro';
 ---
 
 <BaseLayout
-  title="Our Vision"
-  description="Silara SuperFoods — nutrient-dense superfoods built for modern life. Foods that sustain us through smarter, cleaner nutrition."
+  title="Makhana Foxnut Superfood Snacks | Silara SuperFoods"
+  description="Buy premium makhana foxnut (popped lotus seeds) — a nutrient-dense superfood and healthy snack. High protein, low calorie, gluten-free. Silara SuperFoods delivers clean health food for modern life."
+  keywords="makhana, foxnut, superfood, health food, lotus seeds, healthy snacks India, plant protein, gluten free snacks, popped makhana, foxnut benefits, makhana benefits"
 >
   <!-- JSON-LD Organisation schema for SEO -->
   <script type="application/ld+json" slot="head">
@@ -18,8 +19,11 @@ import Line from '../components/Line.astro';
       "@type": "Organization",
       "name": "Silara SuperFoods",
       "url": "https://silara.org",
-      "description": "Nutrient-dense superfoods built for modern life.",
-      "email": "contact@silara.org"
+      "description": "Premium makhana foxnut superfood snacks built for modern healthy living.",
+      "email": "contact@silara.org",
+      "sameAs": ["https://silara.org"],
+      "foundingLocation": "India",
+      "keywords": "makhana, foxnut, superfood, health food, lotus seeds, healthy snacks"
     }
   </script>
 
@@ -33,7 +37,7 @@ import Line from '../components/Line.astro';
       </div>
       <Line />
     </div>
-    <Line />
+    <div class="vision__divider-desktop"><Line /></div>
 
     <!-- ── Content body ──────────────────────────────────────── -->
     <div class="vision__body">
@@ -251,6 +255,14 @@ import Line from '../components/Line.astro';
       padding-bottom: 0;
     }
 
+    .vision__divider-desktop {
+      display: none;
+    }
+
+    .vision__title-section :global([data-line]) {
+      display: none;
+    }
+
     .vision__title-block {
       padding: var(--scale-8) var(--scale-7);
       gap: var(--scale-6);
@@ -310,9 +322,7 @@ import Line from '../components/Line.astro';
     }
 
     .vision__legal {
-      max-width: none;
-      font-size: var(--scale-6); /* 21px on tablet */
-      line-height: var(--scale-6);
+      display: none;
     }
   }
 

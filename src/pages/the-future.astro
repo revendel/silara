@@ -1,0 +1,247 @@
+---
+/**
+ * The Future page — "Future Desktop" (Figma node 738:691)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Future of Superfoods | Silara SuperFoods"
+  description="Silara SuperFoods is building the world's premier superfood brand — sourcing ancient nutrient-dense health foods like makhana foxnut and bringing them into the modern diet."
+  keywords="superfood brand India, ancient health food, makhana foxnut nutrition, future superfoods, nutrient dense snacks, plant based health food"
+>
+  <section class="future" aria-label="The Future">
+
+    <!-- Title + paragraph row -->
+    <div class="future__title-row" data-animate="future-title">
+      <h1 class="future__headline">The next frontier for us</h1>
+      <p class="future__intro">
+        We are building a portfolio of the world's most powerful superfoods,
+        bringing ancient nutrition into modern life. Our goal is to make these
+        remarkable ingredients more accessible to people everywhere through
+        simple, clean, performance-driven products.
+      </p>
+    </div>
+
+    <!-- Divider line -->
+    <div class="future__line" data-future-line aria-hidden="true"></div>
+
+    <!-- Superfood list -->
+    <div class="future__list-row" data-animate="future-list">
+      <div class="future__list-item">
+        <span class="future__list-title">Amaranth</span>
+        <p class="future__list-desc">Ancient grain. Modern fuel for human performance.</p>
+      </div>
+      <div class="future__list-line" aria-hidden="true"></div>
+      <div class="future__list-item">
+        <span class="future__list-title">Millet</span>
+        <p class="future__list-desc">Ancient resilience powering modern nutrition.</p>
+      </div>
+      <div class="future__list-line" aria-hidden="true"></div>
+      <div class="future__list-item">
+        <span class="future__list-title">Moringa</span>
+        <p class="future__list-desc">Nature's most powerful green superleaf.</p>
+      </div>
+      <div class="future__list-line" aria-hidden="true"></div>
+      <div class="future__list-item">
+        <span class="future__list-title">Quinoa</span>
+        <p class="future__list-desc">Complete plant protein for the next generation.</p>
+      </div>
+      <div class="future__list-line" aria-hidden="true"></div>
+      <div class="future__list-item">
+        <span class="future__list-title">Chia</span>
+        <p class="future__list-desc">Massive nutrition and sustained energy.</p>
+      </div>
+    </div>
+
+    <!-- Hero image -->
+    <div class="future__image-container" data-animate="future-image">
+      <img
+        src="/images/future-hero.jpg"
+        alt="Silara SuperFoods — the future of superfoods"
+        class="future__image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+  </section>
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initFutureAnimations() {
+    // Header line (global, from BaseLayout — run it here too for direct visits)
+    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+    if (headerLine) {
+      headerLine.style.transformOrigin = 'left center';
+      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Title row: fade + lift
+    const titleRow = document.querySelector<HTMLElement>('[data-animate="future-title"]');
+    if (titleRow) {
+      animate(titleRow, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Divider line: scaleX left to right
+    const divider = document.querySelector<HTMLElement>('[data-future-line]');
+    if (divider) {
+      divider.style.transformOrigin = 'left center';
+      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // List items: staggered fade + lift
+    const items = document.querySelectorAll<HTMLElement>('.future__list-item');
+    items.forEach((item, i) => {
+      animate(item, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.08, easing: [0.22, 1, 0.36, 1] as const });
+    });
+
+    // List separator lines: staggered scaleX left to right
+    const listLines = document.querySelectorAll<HTMLElement>('.future__list-line');
+    listLines.forEach((line, i) => {
+      line.style.transformOrigin = 'left center';
+      animate(line, { scaleX: [0, 1] }, { duration: 0.7, delay: 0.45 + i * 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    });
+
+    // Hero image: clip-path swipe up
+    const image = document.querySelector<HTMLElement>('[data-animate="future-image"]');
+    if (image) {
+      animate(image, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, delay: 0.5, easing: [0.16, 1, 0.3, 1] as const });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initFutureAnimations);
+</script>
+
+<style>
+  .future {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Title + paragraph row — bottom-aligned, left headline + right paragraph */
+  .future__title-row {
+    display: flex;
+    align-items: flex-end;
+    padding: var(--scale-8) var(--scale-8);
+  }
+
+  .future__headline {
+    flex: 1;
+    max-width: 24%;
+    font-size: var(--scale-8);
+    line-height: var(--scale-8);
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .future__intro {
+    flex-shrink: 0;
+    width: min(389px, 35%);
+    margin-left: auto;
+    font-size: var(--scale-6);    /* 21px */
+    line-height: var(--scale-6);
+    font-weight: 400;
+  }
+
+  /* Divider */
+  .future__line {
+    width: 100%;
+    height: 0;
+    border-top: var(--scale-2) solid var(--lines);
+    flex-shrink: 0;
+    transform-origin: left center;
+  }
+
+  /* Superfood list */
+  .future__list-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--scale-7);          /* 34px */
+    padding: var(--scale-8) var(--scale-8);
+  }
+
+  .future__list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: min(249px, calc(20% - var(--scale-7)));
+  }
+
+  /* List separator lines — hidden on desktop, shown on tablet/mobile */
+  .future__list-line {
+    display: none;
+    width: 100%;
+    height: 0;
+    border-top: var(--scale-2) solid var(--lines);
+    flex-shrink: 0;
+    transform-origin: left center;
+  }
+
+  .future__list-title {
+    font-size: var(--scale-6);    /* 21px */
+    line-height: var(--scale-7);
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  .future__list-desc {
+    font-size: var(--scale-6);
+    line-height: var(--scale-6);
+    font-weight: 400;
+  }
+
+  /* Hero image */
+  .future__image-container {
+    height: 409px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .future__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Tablet */
+  @media (max-width: 1023px) {
+    .future__title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--scale-8) var(--scale-7);
+      gap: var(--scale-7);
+    }
+    .future__headline { font-size: var(--scale-8); line-height: var(--scale-8); max-width: none; width: 100%; }
+    .future__intro { width: 100%; }
+    .future__line { display: none; }
+
+    .future__list-row {
+      padding: var(--scale-8) var(--scale-7);
+      gap: var(--scale-6);
+    }
+    .future__list-item { width: calc(50% - var(--scale-6)); }
+    .future__list-line { display: block; }
+
+    .future__image-container { height: 300px; margin-top: 0; }
+    .future { flex: unset; }
+  }
+
+  /* Mobile */
+  @media (max-width: 743px) {
+    .future__title-row { padding: var(--scale-7) var(--scale-6); }
+    .future__headline { font-size: clamp(var(--scale-7), 10vw, var(--scale-8)); max-width: none; width: 100%; }
+    .future__list-row { padding: var(--scale-7) var(--scale-6); gap: var(--scale-7); }
+    .future__list-item { width: 100%; }
+    .future__list-line { display: block; }
+    .future__image-container { height: 240px; }
+  }
+</style>

@@ -6,21 +6,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Our Product"
-  description="Silara SuperFoods — our first superfood launch. Popped lotus seeds, clean plant protein, built for modern life."
+  title="Popped Makhana Foxnut Superfood Snack | Silara SuperFoods"
+  description="Silara's popped makhana foxnut — India's premier superfood snack. High in plant protein, low in calories, gluten-free and roasted for perfect taste. The healthy health food snack you've been looking for."
+  keywords="popped makhana, foxnut, lotus seeds superfood, healthy snack India, makhana protein, foxnut protein, gluten free health food, superfood snack, buy makhana, buy foxnut, makhana calories"
 >
+  <script type="application/ld+json" slot="head">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Silara Popped Makhana Foxnut",
+      "description": "Premium popped lotus seeds (makhana / foxnut) — a nutrient-dense superfood snack. High in plant protein, low in calories, gluten-free.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Silara SuperFoods"
+      },
+      "category": "Health Food / Superfood Snack",
+      "keywords": "makhana, foxnut, lotus seeds, superfood, health food, gluten free snack, plant protein",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "priceCurrency": "INR",
+        "seller": {
+          "@type": "Organization",
+          "name": "Silara Enterprises",
+          "email": "contact@silara.org"
+        }
+      }
+    }
+  </script>
   <section class="product" aria-label="Our Product">
 
-    <!-- Image -->
-    <div class="product__image-container" data-animate="product-image">
-      <img
-        src="/images/product-hero.png"
-        alt="Silara makhana pouch packaging"
-        class="product__image"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
+    <!-- Image — click to open lightbox -->
+    <button class="product__image-trigger" id="product-lightbox-open" aria-label="View full product image">
+      <div class="product__image-container" data-animate="product-image">
+        <img
+          src="/images/product-hero.png"
+          alt="Silara makhana pouch packaging"
+          class="product__image"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </button>
 
     <!-- Headline + table -->
     <div class="product__content-row" data-animate="product-content">
@@ -29,43 +56,168 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="product__table">
         <div class="product__table-header">Details</div>
+        <div class="product__table-line" data-table-line aria-hidden="true"></div>
         <div class="product__table-body">
 
-          <div class="product__table-col product__table-col--labels">
-            <div class="product__table-row">Description</div>
-            <div class="product__table-row">Details</div>
-            <div class="product__table-row">Status</div>
+          <div class="product__table-row">
+            <div class="product__table-label">Description</div>
+            <div class="product__table-value">Popped lotus seeds</div>
           </div>
+          <div class="product__table-line" data-table-line aria-hidden="true"></div>
 
-          <div class="product__table-col product__table-col--values">
-            <div class="product__table-row">Popped lotus seeds</div>
-            <div class="product__table-row">
+          <div class="product__table-row">
+            <div class="product__table-label">Details</div>
+            <div class="product__table-value">
               Foxnuts, also known as lotus seeds, are airy light and delicately
               crunchy. Naturally rich in plant protein, fiber, and essential
               minerals, they offer clean, sustained superfood energy.
             </div>
-            <div class="product__table-row">Available for orders now</div>
           </div>
+          <div class="product__table-line" data-table-line aria-hidden="true"></div>
+
+          <div class="product__table-row">
+            <div class="product__table-label">Status</div>
+            <div class="product__table-value">Available for orders now</div>
+          </div>
+          <div class="product__table-line" data-table-line aria-hidden="true"></div>
 
         </div>
       </div>
 
     </div>
   </section>
+
+  <!-- Lightbox overlay -->
+  <div class="product__lightbox" id="product-lightbox" role="dialog" aria-modal="true" aria-label="Product image" aria-hidden="true">
+    <div class="product__lightbox-stage">
+      <img
+        src="/images/product-hero.png"
+        alt="Silara makhana pouch packaging full view"
+        class="product__lightbox-img"
+      />
+    </div>
+  </div>
+
+  <!-- Close button — floats above header z-index -->
+  <div class="product__lightbox-close-wrap" id="product-lightbox-close-wrap" aria-hidden="true">
+    <button class="product__lightbox-close-btn" id="product-lightbox-close" aria-label="Close product image">Close</button>
+  </div>
+
 </BaseLayout>
 
 <script>
   import { animate } from 'motion';
 
   function initProductAnimations() {
-    const image   = document.querySelector<HTMLElement>('[data-animate="product-image"]');
-    const content = document.querySelector<HTMLElement>('[data-animate="product-content"]');
-    if (!image) return;
-    animate(image, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, delay: 0.1, easing: [0.16, 1, 0.3, 1] as const });
-    if (content) animate(content, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.4, easing: [0.22, 1, 0.36, 1] as const });
+    // Header line: swipe left → right
+    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+    if (headerLine) {
+      headerLine.style.transformOrigin = 'left center';
+      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    // Hero image: clip-path swipe up
+    const image = document.querySelector<HTMLElement>('[data-animate="product-image"]');
+    if (image) {
+      animate(
+        image,
+        { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+        { duration: 0.65, delay: 0.1, easing: [0.16, 1, 0.3, 1] as const }
+      );
+    }
+
+    // Headline: fade + lift
+    const headline = document.querySelector<HTMLElement>('.product__headline');
+    if (headline) {
+      animate(
+        headline,
+        { opacity: [0, 1], y: [16, 0] },
+        { duration: 0.7, delay: 0.45, easing: [0.22, 1, 0.36, 1] as const }
+      );
+    }
+
+    // Table header text: fade in
+    const tableHeader = document.querySelector<HTMLElement>('.product__table-header');
+    if (tableHeader) {
+      animate(
+        tableHeader,
+        { opacity: [0, 1] },
+        { duration: 0.4, delay: 0.5, easing: [0.22, 1, 0.36, 1] as const }
+      );
+    }
+
+    // Table row content: staggered fade
+    const tableRows = document.querySelectorAll<HTMLElement>('.product__table-row');
+    tableRows.forEach((row, i) => {
+      animate(
+        row,
+        { opacity: [0, 1] },
+        { duration: 0.4, delay: 0.65 + i * 0.12, easing: [0.22, 1, 0.36, 1] as const }
+      );
+    });
+
+    // Grey lines: scaleX left→right, staggered
+    const tableLines = document.querySelectorAll<HTMLElement>('[data-table-line]');
+    tableLines.forEach((line, i) => {
+      line.style.transformOrigin = 'left center';
+      animate(
+        line,
+        { scaleX: [0, 1] },
+        { duration: 0.8, delay: 0.55 + i * 0.1, easing: [0.22, 1, 0.36, 1] as const }
+      );
+    });
   }
 
   document.addEventListener('astro:page-load', initProductAnimations);
+
+  function bindLightbox() {
+    const openBtn   = document.getElementById('product-lightbox-open') as HTMLButtonElement | null;
+    const lightbox  = document.getElementById('product-lightbox');
+    const closeWrap = document.getElementById('product-lightbox-close-wrap');
+    const closeBtn  = document.getElementById('product-lightbox-close');
+    const menuBtn   = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+    const menuBtnBot = document.getElementById('menu-toggle-bottom') as HTMLButtonElement | null;
+
+    const headerInner = document.querySelector('.site-header__inner');
+    const headerChildren = headerInner ? Array.from(headerInner.children) as HTMLElement[] : [];
+
+    if (!openBtn || !lightbox || !closeWrap || !closeBtn) return;
+
+    function openLightbox() {
+      lightbox!.classList.add('is-open');
+      lightbox!.setAttribute('aria-hidden', 'false');
+      closeWrap!.classList.add('is-visible');
+      closeWrap!.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      headerChildren.forEach((el, i) => { if (i > 0) el.style.visibility = 'hidden'; });
+      if (menuBtnBot) menuBtnBot.style.visibility = 'hidden';
+      closeBtn!.focus();
+    }
+
+    function closeLightbox() {
+      lightbox!.classList.remove('is-open');
+      lightbox!.setAttribute('aria-hidden', 'true');
+      closeWrap!.classList.remove('is-visible');
+      closeWrap!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      headerChildren.forEach(el => el.style.visibility = '');
+      if (menuBtnBot) menuBtnBot.style.visibility = '';
+      openBtn!.focus();
+    }
+
+    openBtn.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    // clicking anywhere on the dark area (lightbox or stage background) closes it
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== lightbox && e.target !== document.querySelector('.product__lightbox-stage')) return;
+      closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox!.classList.contains('is-open')) closeLightbox();
+    });
+  }
+
+  document.addEventListener('astro:page-load', bindLightbox);
 </script>
 
 <style>
@@ -90,13 +242,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
   }
 
   /* Headline (737px wide) + table, 125px apart */
   .product__content-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 125px;
     flex-shrink: 0;
   }
@@ -117,26 +269,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .product__table-header {
     padding: var(--scale-4) var(--scale-4) var(--scale-6);
-    border-bottom: var(--scale-2) solid var(--lines);
     font-size: var(--scale-6);
     line-height: var(--scale-7);
     font-weight: 700;
     text-transform: capitalize;
   }
 
+  .product__table-line {
+    width: 100%;
+    height: 0;
+    border-top: var(--scale-2) solid var(--lines);
+    flex-shrink: 0;
+    transform-origin: left center;
+  }
+
   .product__table-body {
     display: flex;
+    flex-direction: column;
     width: 100%;
   }
 
-  .product__table-col--labels { flex-shrink: 0; }
-  .product__table-col--values { flex: 1; min-width: 0; }
-
   .product__table-row {
+    display: flex;
+  }
+
+  .product__table-label {
+    flex-shrink: 0;
+    width: 220px;
     padding: var(--scale-6) var(--scale-9) var(--scale-6) var(--scale-4);
-    border-bottom: var(--scale-2) solid var(--lines);
     font-size: var(--scale-6);
-    line-height: var(--scale-6);
+    font-weight: 400;
+  }
+
+  .product__table-value {
+    flex: 1;
+    min-width: 0;
+    padding: var(--scale-6) var(--scale-4);
+    font-size: var(--scale-6);
     font-weight: 400;
   }
 
@@ -158,6 +327,92 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
   }
 
+  /* ── Lightbox ── */
+  .product__image-trigger {
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .product__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background-color: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+  }
+
+  .product__lightbox.is-open {
+    opacity: 1;
+    backdrop-filter: blur(var(--scale-4));
+    -webkit-backdrop-filter: blur(var(--scale-4));
+    pointer-events: auto;
+  }
+
+  .product__lightbox-stage {
+    width: 100%;
+    height: calc(100% - var(--scale-9));
+    margin-top: var(--scale-9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--scale-8);
+  }
+
+  .product__lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .product__lightbox-close-wrap {
+    position: fixed;
+    top: 0;
+    right: var(--scale-8);
+    height: var(--scale-9);
+    display: flex;
+    align-items: center;
+    z-index: 85;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .product__lightbox-close-wrap.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .product__lightbox-close-btn {
+    font-size: var(--scale-6);
+    line-height: var(--scale-6);
+    color: var(--base);
+    background-color: var(--primary);
+    padding: var(--scale-5) var(--scale-6);
+    border-radius: var(--scale-9);
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  .product__lightbox-close-btn:hover {
+    opacity: 0.75;
+  }
+
   /* Mobile */
   @media (max-width: 743px) {
     .product {
@@ -166,7 +421,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     .product__image-container { height: 260px; }
     .product__headline { font-size: clamp(var(--scale-7), 10vw, var(--scale-8)); }
-    .product__table-col--labels { display: none; }
-    .product__table-row { padding-right: var(--scale-6); }
+
+    /* Stack label above value */
+    .product__table-row {
+      flex-direction: column;
+    }
+
+    .product__table-label {
+      width: auto;
+      padding: var(--scale-6) var(--scale-4) var(--scale-3);
+      font-weight: 700;
+    }
+
+    .product__table-value {
+      padding: 0 var(--scale-4) var(--scale-6);
+    }
   }
 </style>

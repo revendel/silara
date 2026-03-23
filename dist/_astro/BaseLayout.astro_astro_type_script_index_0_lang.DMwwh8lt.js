@@ -1,1 +1,0 @@
-import{a}from"./index.DTstjLaA.js";document.addEventListener("astro:page-load",()=>{const t=document.getElementById("main-content");t&&a(t,{opacity:[0,1],y:[10,0]},{duration:.4,easing:[.4,0,.2,1]})});

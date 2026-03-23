@@ -1,0 +1,266 @@
+---
+/**
+ * Contact page — "contact Desktop" (Figma node 858:2409)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Line from '../components/Line.astro';
+---
+
+<BaseLayout
+  title="Contact | Order Makhana Foxnut Superfood — Silara SuperFoods"
+  description="Order Silara makhana foxnut superfood snacks or get in touch. Contact Silara Enterprises by email, phone, or WhatsApp for wholesale and retail health food orders."
+  keywords="buy makhana, buy foxnut, order superfood snack, health food India, contact silara, makhana wholesale, foxnut wholesale, makhana retail"
+>
+  <section class="cp" aria-label="Contact">
+
+    <!-- Big title area -->
+    <div class="cp__title-section" data-animate="cp-title">
+      <div class="cp__heading-block">
+        <h1 class="cp__headline">Contact</h1>
+        <p class="cp__subheadline">Silara Enterprises</p>
+      </div>
+      <div class="cp__divider"><Line /></div>
+      <Line />
+    </div>
+
+    <!-- Info + image row -->
+    <div class="cp__body" data-animate="cp-body">
+
+      <!-- Left: contact info tables -->
+      <div class="cp__info-col">
+
+        <div class="cp__table">
+          <h2 class="cp__table-header">Email</h2>
+          <div class="cp__table-row">
+            <a href="mailto:contact@silara.org" class="cp__table-value">contact@silara.org</a>
+          </div>
+        </div>
+
+        <div class="cp__table">
+          <h2 class="cp__table-header">Order</h2>
+          <div class="cp__table-row">
+            <a href="https://wa.me/918282926852" class="cp__table-value" rel="noopener noreferrer" target="_blank">+91&nbsp; 82&nbsp;82&nbsp;92&nbsp;68&nbsp;52</a>
+          </div>
+        </div>
+
+        <div class="cp__table">
+          <h2 class="cp__table-header">Phone</h2>
+          <div class="cp__table-row">
+            <a href="tel:+917439285007" class="cp__table-value">+91 743 92 85 007</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: hero image -->
+      <div class="cp__image-wrap">
+        <img
+          src="/images/contact-hero.png"
+          alt="Silara makhana in a bowl"
+          class="cp__image"
+          loading="eager"
+        />
+      </div>
+
+    </div>
+
+  </section>
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initCPAnimations() {
+    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+    if (headerLine) {
+      headerLine.style.transformOrigin = 'left center';
+      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    const titleSection = document.querySelector<HTMLElement>('[data-animate="cp-title"]');
+    if (titleSection) {
+      animate(titleSection, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    const divider = document.querySelector<HTMLElement>('.cp__divider [data-line]');
+    if (divider) {
+      divider.style.transformOrigin = 'left center';
+      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    const thirdLine = document.querySelector<HTMLElement>('.cp__title-section > [data-line]');
+    if (thirdLine) {
+      thirdLine.style.transformOrigin = 'left center';
+      animate(thirdLine, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.5, easing: [0.22, 1, 0.36, 1] as const });
+    }
+
+    const tables = document.querySelectorAll<HTMLElement>('.cp__table');
+    tables.forEach((table, i) => {
+      animate(table, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    });
+
+    const image = document.querySelector<HTMLElement>('.cp__image-wrap');
+    if (image) {
+      animate(image, { opacity: [0, 1] }, { duration: 0.8, delay: 0.3, easing: [0.22, 1, 0.36, 1] as const });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initCPAnimations);
+</script>
+
+<style>
+  .cp {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* ── Title section ── */
+  .cp__title-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cp__heading-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-5);
+    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8);
+  }
+
+  .cp__headline {
+    font-size: clamp(var(--scale-8), 5vw, var(--scale-9));
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .cp__subheadline {
+    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7));
+    line-height: var(--scale-7);
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  .cp__divider {
+    padding-bottom: var(--scale-7);
+  }
+
+  /* ── Body: info + image ── */
+  .cp__body {
+    display: flex;
+    align-items: stretch;
+    padding-left: var(--scale-8);
+    gap: var(--scale-8);
+    flex: 1;
+    min-height: 400px;
+  }
+
+  /* ── Info column ── */
+  .cp__info-col {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 275px;
+    padding-bottom: var(--scale-8);
+  }
+
+  .cp__table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cp__table-header {
+    font-size: var(--scale-6);       /* 21px */
+    line-height: var(--scale-7);     /* 34px */
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: var(--scale-6) var(--scale-4) var(--scale-3);
+  }
+
+  .cp__table-row {
+    padding: var(--scale-4) var(--scale-9) var(--scale-6) var(--scale-4);
+  }
+
+  .cp__table-value {
+    font-size: var(--scale-6);       /* 21px */
+    line-height: var(--scale-6);
+    font-weight: 400;
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+  }
+
+  a.cp__table-value:hover {
+    opacity: 0.5;
+  }
+
+  /* ── Hero image ── */
+  .cp__image-wrap {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cp__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* ── Tablet ── */
+  @media (max-width: 1023px) {
+    .cp__heading-block {
+      padding: var(--scale-8) var(--scale-7);
+    }
+
+    .cp__divider {
+      display: none;
+    }
+
+    .cp__body {
+      flex-direction: column;
+      padding: 0 var(--scale-7);
+      gap: var(--scale-7);
+    }
+
+    .cp__info-col {
+      width: 100%;
+    }
+
+    .cp__image-wrap {
+      height: 360px;
+      position: relative;
+      flex: unset;
+    }
+
+    .cp { flex: unset; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 743px) {
+    .cp__heading-block {
+      padding: var(--scale-7) var(--scale-6);
+    }
+
+    .cp__body {
+      padding: 0 var(--scale-6);
+    }
+
+    .cp__table-row {
+      padding-right: var(--scale-7);
+    }
+
+    .cp__image-wrap {
+      height: 260px;
+    }
+
+    .cp__table-value {
+      white-space: normal;
+    }
+  }
+</style>

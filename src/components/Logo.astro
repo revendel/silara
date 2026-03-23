@@ -135,6 +135,26 @@ const { variant = 'default', class: className } = Astro.props;
     font-size: var(--scale-6);
   }
 
+  /* Smaller icon: 9.75px dots matching the inactive/footer icon */
+  .logo--smaller .logo__icon {
+    width: 19.5px;
+    height: 39px;
+  }
+
+  .logo--smaller .logo__dot {
+    width: 9.75px;
+    height: 9.75px;
+  }
+
+  .logo--smaller .logo__dot--tl { top: 0px;     left: 0px;    }
+  .logo--smaller .logo__dot--bl { top: 19.5px;  left: 0px;    }
+  .logo--smaller .logo__dot--tr { top: 9.75px;  left: 9.75px; }
+  .logo--smaller .logo__dot--br { top: 29.25px; left: 9.75px; }
+
+  .logo--smaller {
+    height: 39px;
+  }
+
   /* ── Tablet/mobile: shrink default logo to smaller variant sizing ── */
   @media (max-width: 1023px) {
     .logo--default .logo__brand,

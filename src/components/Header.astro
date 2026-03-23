@@ -23,7 +23,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="site-header" transition:name="site-header" transition:animate="none">
   <div class="site-header__inner">
-    <Logo />
+    <Logo variant="smaller" />
 
     <!-- Desktop nav -->
     <nav class="site-header__nav" aria-label="Primary navigation">
@@ -44,7 +44,7 @@ const currentPath = Astro.url.pathname;
       </ul>
     </nav>
 
-    <!-- Mobile: "Other Pages" pill button -->
+    <!-- Pill button — desktop only -->
     <button
       class="site-header__menu-btn"
       aria-label="Open navigation menu"
@@ -64,6 +64,8 @@ const currentPath = Astro.url.pathname;
     flex-direction: column;
     background-color: var(--base);
     flex-shrink: 0;
+    position: relative;
+    z-index: 80;
   }
 
   .site-header__inner {
@@ -86,26 +88,28 @@ const currentPath = Astro.url.pathname;
     line-height: var(--scale-7);
     padding: var(--scale-4);
     white-space: nowrap;
+    opacity: 0.5;
     transition: opacity 0.15s ease;
   }
 
   .site-header__nav-link:hover {
-    opacity: 0.5;
+    opacity: 1;
   }
 
   .site-header__nav-link.is-active {
-    opacity: 0.5;
+    opacity: 1;
   }
 
-  /* ── Mobile pill ── */
+  /* ── Pill button (desktop only) ── */
   .site-header__menu-btn {
     display: none;
-    font-size: var(--scale-7);
-    line-height: var(--scale-7);
+    font-size: var(--scale-6);
+    line-height: var(--scale-6);
     color: var(--base);
     background-color: var(--primary);
     padding: var(--scale-5) var(--scale-6);
     border-radius: var(--scale-9);
+    white-space: nowrap;
     transition: opacity 0.15s ease;
   }
 
@@ -123,8 +127,9 @@ const currentPath = Astro.url.pathname;
       display: none;
     }
 
+    /* Top bar mobile: logo only, no button */
     .site-header__menu-btn {
-      display: block;
+      display: none;
     }
   }
 </style>

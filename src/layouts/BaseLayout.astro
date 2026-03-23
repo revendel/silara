@@ -7,6 +7,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MenuOverlay from '../components/MenuOverlay.astro';
+import Logo from '../components/Logo.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -75,17 +76,42 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     <!-- Mobile / tablet slide-in nav overlay -->
     <MenuOverlay />
 
+    <!-- Mobile bottom nav bar: logo icon left, pill button right -->
+    <div class="mobile-bottom-nav">
+      <Logo variant="inactive" />
+      <button
+        class="mobile-bottom-nav__btn"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="menu-overlay"
+        id="menu-toggle-bottom"
+      >
+        Other Pages
+      </button>
+    </div>
+
     <script>
       import { animate } from 'motion';
 
-      // Fade + lift the main content on every page load / navigation
       document.addEventListener('astro:page-load', () => {
+        // Fade + lift the main content on every page load / navigation
         const main = document.getElementById('main-content');
         if (main) {
           animate(
             main,
             { opacity: [0, 1], y: [10, 0] },
             { duration: 0.4, easing: [0.4, 0, 0.2, 1] }
+          );
+        }
+
+        // Header line swipe-in — runs on every page
+        const headerLine = document.querySelector<HTMLElement>('header [data-line]');
+        if (headerLine) {
+          headerLine.style.transformOrigin = 'left center';
+          animate(
+            headerLine,
+            { scaleX: [0, 1] },
+            { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const }
           );
         }
       });

@@ -106,3 +106,44 @@ button {
 ::view-transition-new(site-footer) {
   animation: none;
 }
+
+/* ─────────────── Mobile bottom nav ─────────────────────────── */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobile-bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--scale-6) var(--scale-7);
+    background-color: var(--base);
+    border-top: var(--scale-2) solid var(--lines);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+  }
+
+  /* Push page content above the fixed bottom nav so nothing is hidden */
+  .page {
+    padding-bottom: calc(var(--scale-6) * 2 + var(--scale-6) + var(--scale-5) * 2 + var(--scale-2));
+  }
+
+  .mobile-bottom-nav__btn {
+    font-size: var(--scale-6);
+    line-height: var(--scale-6);
+    color: var(--base);
+    background-color: var(--primary);
+    padding: var(--scale-5) var(--scale-6);
+    border-radius: var(--scale-9);
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+  }
+
+  .mobile-bottom-nav__btn:hover {
+    opacity: 0.75;
+  }
+}

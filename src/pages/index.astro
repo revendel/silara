@@ -69,7 +69,7 @@ import Line from '../components/Line.astro';
 
           <!-- Small image + slogan -->
           <div class="vision__slogan">
-            <div class="vision__slogan-image">
+            <div class="vision__slogan-image" data-animate="image-small">
               <img
                 src="/images/vision-slogan.jpg"
                 alt="Makhana superfood close-up"
@@ -205,8 +205,7 @@ import Line from '../components/Line.astro';
   .vision__slogan-image {
     position: relative;
     flex: 1;
-    min-height: 250px;
-    max-height: 240px;
+    min-height: 200px;
     flex-shrink: 0;
     overflow: hidden;
   }
@@ -348,53 +347,64 @@ import Line from '../components/Line.astro';
 </style>
 
 <script>
-  import { animate, inView } from 'motion';
+  import { animate } from 'motion';
 
   function initVisionAnimations() {
     const headline    = document.querySelector<HTMLElement>('[data-animate="headline"]');
     const subheadline = document.querySelector<HTMLElement>('[data-animate="subheadline"]');
     const imageLeft   = document.querySelector<HTMLElement>('[data-animate="image-left"]');
+    const imageSmall  = document.querySelector<HTMLElement>('[data-animate="image-small"]');
     const contentRight = document.querySelector<HTMLElement>('[data-animate="content-right"]');
-    const lines       = document.querySelectorAll<HTMLElement>('[data-line]');
+
+    const lines = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-line]')
+    ).filter(l => !l.closest('header')); // header line is animated by BaseLayout
 
     if (!headline) return;
 
-    // Lines: draw left to right with stagger
+    // Line below title: 0.35s  |  Line above body: 0.5s
     lines.forEach((line, i) => {
       line.style.transformOrigin = 'left center';
       animate(
-        line,
+        line as Element,
         { scaleX: [0, 1] },
-        { duration: 0.9, delay: 0.1 + i * 0.12, easing: [0.22, 1, 0.36, 1] }
+        { duration: 1.0, delay: [0.35, 0.5][i] ?? 0.35, easing: [0.22, 1, 0.36, 1] as const }
       );
     });
 
-    // Headline: clip-path wipe up + opacity
+    // Headline: 0.15s
     animate(
-      headline,
+      headline as Element,
       { opacity: [0, 1], y: [30, 0] },
-      { duration: 0.7, easing: [0.22, 1, 0.36, 1] }
+      { duration: 0.7, delay: 0.15, easing: [0.22, 1, 0.36, 1] as const }
     );
 
-    // Subheadline: follows headline with a short delay
+    // Subheadline: 0.3s
     animate(
-      subheadline!,
+      subheadline! as Element,
       { opacity: [0, 1], y: [20, 0] },
-      { duration: 0.6, delay: 0.15, easing: [0.22, 1, 0.36, 1] }
+      { duration: 0.6, delay: 0.3, easing: [0.22, 1, 0.36, 1] as const }
     );
 
-    // Big image: slides in from left
+    // Big image: 0.6s
     animate(
-      imageLeft!,
-      { opacity: [0, 1], x: [-30, 0] },
-      { duration: 0.7, delay: 0.25, easing: [0.22, 1, 0.36, 1] }
+      imageLeft! as Element,
+      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+      { duration: 0.65, delay: 0.4, easing: [0.16, 1, 0.3, 1] as const }
     );
 
-    // Content block: slides in from right
+    // Content block: 0.65s — fade only, no movement
     animate(
-      contentRight!,
-      { opacity: [0, 1], x: [30, 0] },
-      { duration: 0.7, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
+      contentRight! as Element,
+      { opacity: [0, 1] },
+      { duration: 0.7, delay: 0.65, easing: [0.22, 1, 0.36, 1] as const }
+    );
+
+    // Small slogan image: 0.85s
+    animate(
+      imageSmall! as Element,
+      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+      { duration: 0.65, delay: 0.55, easing: [0.16, 1, 0.3, 1] as const }
     );
   }
 

@@ -1,0 +1,219 @@
+---
+/**
+ * Mission page — "Mission Desktop" (node 726:984)
+ * Figma: outer frame is flex-col justify-between — header top, content+footer bottom.
+ * In this project the footer is in BaseLayout, so we use margin-top:auto on
+ * the inner content wrapper to push it flush to the footer bottom edge.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Our Mission"
+  description="Silara SuperFoods — delivering clean, performance-driven superfoods with uncompromising quality, redefining how the world snacks."
+>
+
+  <section class="mission" aria-label="Our Mission">
+
+    <!-- inner wrapper: margin-top:auto pushes it to the bottom of the section -->
+    <div class="mission__inner">
+
+      <!-- ── Text row (node 726:1116) ──────────────────────────── -->
+      <div class="mission__text-row">
+
+        <!-- Left: body paragraph, w=654px in Figma -->
+        <p class="mission__paragraph">
+          We create thoughtfully crafted foods built for modern life — simple
+          ingredients, exceptional nutrition, and uncompromising standards at
+          every step. By elevating nature's most powerful superfoods through
+          design, quality, and innovation, we aim to transform everyday snacking
+          into something cleaner, smarter, and more purposeful.
+        </p>
+
+        <!-- Right: title + sub-paragraph, flex-1 -->
+        <div class="mission__title-block">
+          <h2 class="mission__headline">Our Mission</h2>
+          <p class="mission__subheadline">
+            To deliver clean, performance-driven superfoods with uncompromising
+            quality, redefining how the world snacks.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ── Image (node 726:1122) h=526px ─────────────────────── -->
+      <div class="mission__image-container" data-animate="mission-image">
+        <img
+          src="/images/mission-hero.jpg"
+          alt="Harvested makhana"
+          class="mission__image"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  import { animate } from 'motion';
+
+  function initMissionAnimations() {
+    const image   = document.querySelector<HTMLElement>('[data-animate="mission-image"]');
+    const textRow = document.querySelector<HTMLElement>('.mission__text-row');
+
+    if (!image) return;
+
+    // Text row: fade + lift up
+    if (textRow) {
+      animate(
+        textRow,
+        { opacity: [0, 1], y: [20, 0] },
+        { duration: 0.7, delay: 0.15, easing: [0.22, 1, 0.36, 1] as const }
+      );
+    }
+
+    // Image: clip-path swipe reveal from bottom (same as vision page)
+    animate(
+      image,
+      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+      { duration: 0.65, delay: 0.35, easing: [0.16, 1, 0.3, 1] as const }
+    );
+  }
+
+  document.addEventListener('astro:page-load', initMissionAnimations);
+</script>
+
+<style>
+  /* ── Section: fills page__main flex column ───────────────────── */
+  .mission {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /*
+   * Inner wrapper fills the entire section height.
+   * flex-direction: column so text row sits above image.
+   * padding-top: scale-9 (89px) = gap below header.
+   * No bottom padding so image bottom = footer top edge.
+   */
+  .mission__inner {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-9);     /* 89px between text row and image */
+    padding: var(--scale-9) var(--scale-8) 0; /* 89px top, 55px sides, no bottom */
+  }
+
+  /* ── Text row ─────────────────────────────────────────────────── */
+  .mission__text-row {
+    display: flex;
+    align-items: flex-end;   /* Figma: items-end — columns align at baseline */
+    gap: var(--scale-10);    /* 144px horizontal gap between columns */
+  }
+
+  /* Left column: fixed width 654px from Figma */
+  .mission__paragraph {
+    flex: 0 0 auto;
+    width: min(654px, 38%);
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-6);
+    font-weight: 400;
+  }
+
+  /* Right column: flex-1, flex-col, gap-34px */
+  .mission__title-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-7);         /* 34px */
+    min-width: 0;
+  }
+
+  .mission__headline {
+    font-size: var(--scale-9);   /* 89px */
+    line-height: var(--scale-9);
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  .mission__subheadline {
+    font-size: var(--scale-6);   /* 21px */
+    line-height: var(--scale-6);
+    font-weight: 400;
+    max-width: 90%;
+  }
+
+  /* ── Image container: grows to fill all remaining space ────────── */
+  .mission__image-container {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mission__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 29% 22%;
+    max-width: none;
+  }
+
+  /* ── Tablet (744 – 1023 px) ───────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .mission__inner {
+      margin-top: 0;   /* no push-down on tablet — natural top-to-bottom flow */
+      padding: var(--scale-7) var(--scale-7) 0;
+      gap: var(--scale-8);
+    }
+
+    .mission__text-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--scale-7);
+    }
+
+    /* Figma mobile order: headline → subheadline → paragraph → image */
+    .mission__title-block { order: 1; }
+    .mission__paragraph   { order: 2; width: 100%; }
+
+    .mission__headline {
+      font-size: var(--scale-8);  /* 55px */
+    }
+
+    .mission__image-container {
+      height: 380px;
+      min-height: 250px;
+    }
+  }
+
+  /* ── Mobile (< 744 px) ───────────────────────────────────────── */
+  @media (max-width: 743px) {
+    .mission__inner {
+      padding: var(--scale-6) var(--scale-6) 0;
+      gap: var(--scale-7);
+    }
+
+    .mission__headline {
+      font-size: clamp(var(--scale-7), 10vw, var(--scale-8));
+    }
+
+    .mission__image-container {
+      height: 260px;
+      min-height: 250px;
+    }
+
+    .mission__image {
+      object-position: 90% center;
+    }
+  }
+</style>

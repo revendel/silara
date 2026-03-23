@@ -7,7 +7,7 @@ import Line from '../components/Line.astro';
 ---
 
 <BaseLayout
-  title="Contact | Order Makhana Foxnut Superfood — Silara SuperFoods"
+  title="Contact | Order Makhana Foxnut Superfood"
   description="Order Silara makhana foxnut superfood snacks or get in touch. Contact Silara Enterprises by email, phone, or WhatsApp for wholesale and retail health food orders."
   keywords="buy makhana, buy foxnut, order superfood snack, health food India, contact silara, makhana wholesale, foxnut wholesale, makhana retail"
 >
@@ -58,6 +58,8 @@ import Line from '../components/Line.astro';
           src="/images/contact-hero.png"
           alt="Silara makhana in a bowl"
           class="cp__image"
+          width="3840"
+          height="2160"
           loading="eager"
         />
       </div>
@@ -71,12 +73,6 @@ import Line from '../components/Line.astro';
   import { animate } from 'motion';
 
   function initCPAnimations() {
-    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-    if (headerLine) {
-      headerLine.style.transformOrigin = 'left center';
-      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
-    }
-
     const titleSection = document.querySelector<HTMLElement>('[data-animate="cp-title"]');
     if (titleSection) {
       animate(titleSection, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });

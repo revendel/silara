@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Future of Superfoods | Silara SuperFoods"
+  title="Future of Superfoods"
   description="Silara SuperFoods is building the world's premier superfood brand — sourcing ancient nutrient-dense health foods like makhana foxnut and bringing them into the modern diet."
   keywords="superfood brand India, ancient health food, makhana foxnut nutrition, future superfoods, nutrient dense snacks, plant based health food"
 >
@@ -60,6 +60,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         src="/images/future-hero.jpg"
         alt="Silara SuperFoods — the future of superfoods"
         class="future__image"
+        width="1631"
+        height="409"
         loading="eager"
         fetchpriority="high"
       />
@@ -72,13 +74,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   import { animate } from 'motion';
 
   function initFutureAnimations() {
-    // Header line (global, from BaseLayout — run it here too for direct visits)
-    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-    if (headerLine) {
-      headerLine.style.transformOrigin = 'left center';
-      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
-    }
-
     // Title row: fade + lift
     const titleRow = document.querySelector<HTMLElement>('[data-animate="future-title"]');
     if (titleRow) {

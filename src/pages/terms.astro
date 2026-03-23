@@ -7,7 +7,7 @@ import Line from '../components/Line.astro';
 ---
 
 <BaseLayout
-  title="Terms & Conditions | Silara SuperFoods"
+  title="Terms & Conditions"
   description="Silara Enterprises — Terms & Conditions for orders, shipping, refunds, and governing law."
   robots="noindex, follow"
 >
@@ -57,7 +57,7 @@ import Line from '../components/Line.astro';
           <h2 class="tc__section-title">Refunds &amp; Returns</h2>
           <p class="tc__section-body">
             Due to the perishable nature of food products, returns are
-            only accepted for damaged reported within 48 hours
+            only accepted for damage reported within 48 hours
             of delivery.
           </p>
         </div>
@@ -89,13 +89,6 @@ import Line from '../components/Line.astro';
   import { animate } from 'motion';
 
   function initTCAnimations() {
-    // Header line
-    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-    if (headerLine) {
-      headerLine.style.transformOrigin = 'left center';
-      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
-    }
-
     // Title block: fade + lift
     const titleSection = document.querySelector<HTMLElement>('[data-animate="tc-title"]');
     if (titleSection) {

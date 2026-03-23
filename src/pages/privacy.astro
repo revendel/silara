@@ -7,7 +7,7 @@ import Line from '../components/Line.astro';
 ---
 
 <BaseLayout
-  title="Privacy Policy | Silara SuperFoods"
+  title="Privacy Policy"
   description="Silara Enterprises — Privacy Policy covering data collection, WhatsApp communication, and your rights."
   robots="noindex, follow"
 >
@@ -87,13 +87,6 @@ import Line from '../components/Line.astro';
   import { animate } from 'motion';
 
   function initPPAnimations() {
-    // Header line
-    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-    if (headerLine) {
-      headerLine.style.transformOrigin = 'left center';
-      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
-    }
-
     // Title block: fade + lift
     const titleSection = document.querySelector<HTMLElement>('[data-animate="pp-title"]');
     if (titleSection) {

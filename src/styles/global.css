@@ -39,6 +39,15 @@ body {
   background-color: var(--base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent subpixel shimmer on animated elements */
+[data-animate], [data-line], .site-header, .menu-overlay {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 img {

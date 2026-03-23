@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Popped Makhana Foxnut Superfood Snack | Silara SuperFoods"
+  title="Popped Makhana Foxnut Superfood Snack"
   description="Silara's popped makhana foxnut — India's premier superfood snack. High in plant protein, low in calories, gluten-free and roasted for perfect taste. The healthy health food snack you've been looking for."
   keywords="popped makhana, foxnut, lotus seeds superfood, healthy snack India, makhana protein, foxnut protein, gluten free health food, superfood snack, buy makhana, buy foxnut, makhana calories"
 >
@@ -43,6 +43,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           src="/images/product-hero.png"
           alt="Silara makhana pouch packaging"
           class="product__image"
+          width="6000"
+          height="4500"
           loading="eager"
           fetchpriority="high"
         />
@@ -94,6 +96,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         src="/images/product-hero.png"
         alt="Silara makhana pouch packaging full view"
         class="product__lightbox-img"
+        width="6000"
+        height="4500"
       />
     </div>
   </div>
@@ -109,13 +113,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   import { animate } from 'motion';
 
   function initProductAnimations() {
-    // Header line: swipe left → right
-    const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-    if (headerLine) {
-      headerLine.style.transformOrigin = 'left center';
-      animate(headerLine, { scaleX: [0, 1] }, { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const });
-    }
-
     // Hero image: clip-path swipe up
     const image = document.querySelector<HTMLElement>('[data-animate="product-image"]');
     if (image) {
@@ -175,7 +172,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const lightbox  = document.getElementById('product-lightbox');
     const closeWrap = document.getElementById('product-lightbox-close-wrap');
     const closeBtn  = document.getElementById('product-lightbox-close');
-    const menuBtn   = document.getElementById('menu-toggle') as HTMLButtonElement | null;
     const menuBtnBot = document.getElementById('menu-toggle-bottom') as HTMLButtonElement | null;
 
     const headerInner = document.querySelector('.site-header__inner');
@@ -191,6 +187,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       document.body.style.overflow = 'hidden';
       headerChildren.forEach((el, i) => { if (i > 0) el.style.visibility = 'hidden'; });
       if (menuBtnBot) menuBtnBot.style.visibility = 'hidden';
+      // wipe the lightbox image bottom → top
+      const lbImg = lightbox!.querySelector<HTMLElement>('.product__lightbox-img');
+      if (lbImg) {
+        animate(lbImg, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, easing: [0.16, 1, 0.3, 1] as const });
+      }
       closeBtn!.focus();
     }
 

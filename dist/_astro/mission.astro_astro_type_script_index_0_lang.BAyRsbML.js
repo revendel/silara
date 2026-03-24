@@ -1,0 +1,1 @@
+import{s as e,i as o}from"./animations.BO6OhK7Q.js";import"./index.DTstjLaA.js";function n(){const i=document.querySelector('[data-animate="mission-image"]'),t=document.querySelector(".mission__text-row");i&&(t&&e(t),o(i))}document.addEventListener("astro:page-load",n);

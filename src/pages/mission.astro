@@ -5,7 +5,9 @@
  * In this project the footer is in BaseLayout, so we use margin-top:auto on
  * the inner content wrapper to push it flush to the footer bottom edge.
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import missionHero from '../assets/images/mission-hero.webp';
 ---
 
 <BaseLayout
@@ -44,12 +46,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- ── Image (node 726:1122) h=526px ─────────────────────── -->
       <div class="mission__image-container" data-animate="mission-image">
-        <img
-          src="/images/mission-hero.webp"
+        <Image
+          src={missionHero}
           alt="Harvested makhana"
           class="mission__image"
-          width="3236"
-          height="1052"
           loading="eager"
           fetchpriority="high"
         />
@@ -61,7 +61,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  import { animate } from 'motion';
+  import { springLift, imageReveal } from '../utils/animations';
 
   function initMissionAnimations() {
     const image   = document.querySelector<HTMLElement>('[data-animate="mission-image"]');
@@ -69,21 +69,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     if (!image) return;
 
-    // Text row: fade + lift up
-    if (textRow) {
-      animate(
-        textRow,
-        { opacity: [0, 1], y: [20, 0] },
-        { duration: 0.7, delay: 0.15, easing: [0.22, 1, 0.36, 1] as const }
-      );
-    }
-
-    // Image: clip-path swipe reveal from bottom (same as vision page)
-    animate(
-      image,
-      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
-      { duration: 0.65, delay: 0.35, easing: [0.16, 1, 0.3, 1] as const }
-    );
+    if (textRow) springLift(textRow);
+    imageReveal(image);
   }
 
   document.addEventListener('astro:page-load', initMissionAnimations);

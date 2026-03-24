@@ -37,6 +37,11 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
     {robots && <meta name="robots" content={robots} />}
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="/fonts/NeueMontreal-Regular.otf" as="font" type="font/opentype" crossorigin />
+    <link rel="preload" href="/fonts/NeueMontreal-Bold.otf" as="font" type="font/opentype" crossorigin />
+
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
@@ -97,29 +102,16 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     </div>
 
     <script>
-      import { animate } from 'motion';
+      import { fadeIn, lineDraw, prefersReducedMotion } from '../utils/animations';
 
       document.addEventListener('astro:page-load', () => {
-        // Fade + lift the main content on every page load / navigation
-        const main = document.getElementById('main-content');
-        if (main) {
-          animate(
-            main,
-            { opacity: [0, 1], y: [10, 0] },
-            { duration: 0.4, easing: [0.4, 0, 0.2, 1] }
-          );
-        }
+        if (prefersReducedMotion()) return;
 
-        // Header line swipe-in — runs on every page
+        const main = document.getElementById('main-content');
+        if (main) fadeIn(main, { duration: 0.4, delay: 0 });
+
         const headerLine = document.querySelector<HTMLElement>('header [data-line]');
-        if (headerLine) {
-          headerLine.style.transformOrigin = 'left center';
-          animate(
-            headerLine,
-            { scaleX: [0, 1] },
-            { duration: 1.0, easing: [0.22, 1, 0.36, 1] as const }
-          );
-        }
+        if (headerLine) lineDraw(headerLine, { duration: 1.0, delay: 0 });
       });
     </script>
   </body>

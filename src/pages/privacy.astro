@@ -84,26 +84,17 @@ import Line from '../components/Line.astro';
 </BaseLayout>
 
 <script>
-  import { animate } from 'motion';
+  import { springLift, lineDraw, fadeIn } from '../utils/animations';
 
   function initPPAnimations() {
-    // Title block: fade + lift
     const titleSection = document.querySelector<HTMLElement>('[data-animate="pp-title"]');
-    if (titleSection) {
-      animate(titleSection, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
-    }
+    if (titleSection) springLift(titleSection, { y: 20, duration: 0.7, delay: 0.1 });
 
-    // Divider line below title: scaleX left to right
     const divider = document.querySelector<HTMLElement>('.pp__divider [data-line]');
-    if (divider) {
-      divider.style.transformOrigin = 'left center';
-      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
-    }
+    if (divider) lineDraw(divider);
 
-    // Grid sections: staggered fade + lift
-    const sections = document.querySelectorAll<HTMLElement>('.pp__section');
-    sections.forEach((section, i) => {
-      animate(section, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.07, easing: [0.22, 1, 0.36, 1] as const });
+    document.querySelectorAll<HTMLElement>('.pp__section').forEach((section, i) => {
+      fadeIn(section, { duration: 0.5, delay: 0.45 + i * 0.07 });
     });
   }
 

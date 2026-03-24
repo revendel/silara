@@ -2,7 +2,9 @@
 /**
  * Our Product page — "Product Desktop" (Figma node 737:519)
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import productHero from '../assets/images/product-hero.webp';
 ---
 
 <BaseLayout
@@ -39,12 +41,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- Image — click to open lightbox -->
     <button class="product__image-trigger" id="product-lightbox-open" aria-label="View full product image">
       <div class="product__image-container" data-animate="product-image">
-        <img
-          src="/images/product-hero.webp"
+        <Image
+          src={productHero}
           alt="Silara makhana pouch packaging"
           class="product__image"
-          width="6000"
-          height="4500"
           loading="eager"
           fetchpriority="high"
         />
@@ -92,12 +92,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Lightbox overlay -->
   <div class="product__lightbox" id="product-lightbox" role="dialog" aria-modal="true" aria-label="Product image" aria-hidden="true">
     <div class="product__lightbox-stage">
-      <img
-        src="/images/product-hero.webp"
+      <Image
+        src={productHero}
         alt="Silara makhana pouch packaging full view"
         class="product__lightbox-img"
-        width="6000"
-        height="4500"
       />
     </div>
   </div>
@@ -110,58 +108,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
+  import { springLift, fadeIn, lineDraw, imageReveal, prefersReducedMotion, EASE_OUT, SPRING } from '../utils/animations';
   import { animate } from 'motion';
 
   function initProductAnimations() {
-    // Hero image: clip-path swipe up
     const image = document.querySelector<HTMLElement>('[data-animate="product-image"]');
-    if (image) {
-      animate(
-        image,
-        { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
-        { duration: 0.65, delay: 0.1, easing: [0.16, 1, 0.3, 1] as const }
-      );
-    }
+    if (image) imageReveal(image, { delay: 0.1 });
 
-    // Headline: fade + lift
     const headline = document.querySelector<HTMLElement>('.product__headline');
-    if (headline) {
-      animate(
-        headline,
-        { opacity: [0, 1], y: [16, 0] },
-        { duration: 0.7, delay: 0.45, easing: [0.22, 1, 0.36, 1] as const }
-      );
-    }
+    if (headline) springLift(headline, { delay: 0.45 });
 
-    // Table header text: fade in
     const tableHeader = document.querySelector<HTMLElement>('.product__table-header');
-    if (tableHeader) {
-      animate(
-        tableHeader,
-        { opacity: [0, 1] },
-        { duration: 0.4, delay: 0.5, easing: [0.22, 1, 0.36, 1] as const }
-      );
-    }
+    if (tableHeader) fadeIn(tableHeader, { duration: 0.4, delay: 0.5 });
 
-    // Table row content: staggered fade
-    const tableRows = document.querySelectorAll<HTMLElement>('.product__table-row');
-    tableRows.forEach((row, i) => {
-      animate(
-        row,
-        { opacity: [0, 1] },
-        { duration: 0.4, delay: 0.65 + i * 0.12, easing: [0.22, 1, 0.36, 1] as const }
-      );
+    document.querySelectorAll<HTMLElement>('.product__table-row').forEach((row, i) => {
+      fadeIn(row, { duration: 0.4, delay: 0.65 + i * 0.12 });
     });
 
-    // Grey lines: scaleX left→right, staggered
-    const tableLines = document.querySelectorAll<HTMLElement>('[data-table-line]');
-    tableLines.forEach((line, i) => {
-      line.style.transformOrigin = 'left center';
-      animate(
-        line,
-        { scaleX: [0, 1] },
-        { duration: 0.8, delay: 0.55 + i * 0.1, easing: [0.22, 1, 0.36, 1] as const }
-      );
+    document.querySelectorAll<HTMLElement>('[data-table-line]').forEach((line, i) => {
+      lineDraw(line, { duration: 1.4, delay: 0.55 + i * 0.12 });
     });
   }
 
@@ -187,10 +152,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       document.body.style.overflow = 'hidden';
       headerChildren.forEach((el, i) => { if (i > 0) el.style.visibility = 'hidden'; });
       if (menuBtnBot) menuBtnBot.style.visibility = 'hidden';
-      // wipe the lightbox image bottom → top
+      // Lightbox image: spring-physics wipe + inner drift
       const lbImg = lightbox!.querySelector<HTMLElement>('.product__lightbox-img');
-      if (lbImg) {
-        animate(lbImg, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, easing: [0.16, 1, 0.3, 1] as const });
+      if (lbImg && !prefersReducedMotion()) {
+        animate(lbImg, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, easing: EASE_OUT });
+        animate(lbImg, { scale: [1.05, 1.0], y: [15, 0] }, { duration: 0.9, easing: SPRING });
       }
       closeBtn!.focus();
     }
@@ -208,7 +174,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     openBtn.addEventListener('click', openLightbox);
     closeBtn.addEventListener('click', closeLightbox);
-    // clicking anywhere on the dark area (lightbox or stage background) closes it
     lightbox.addEventListener('click', (e) => {
       if (e.target !== lightbox && e.target !== document.querySelector('.product__lightbox-stage')) return;
       closeLightbox();
@@ -412,6 +377,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .product__lightbox-close-btn:hover {
     opacity: 0.75;
+  }
+
+  /* 1366 × 768 — scale typography down by one Fibonacci step */
+  @media (min-width: 1024px) and (max-width: 1399px) {
+    .product__headline {
+      font-size: var(--scale-8);
+      line-height: var(--scale-8);
+    }
+    .product__table-header {
+      font-size: var(--scale-5);
+      line-height: var(--scale-6);
+    }
+    .product__table-label,
+    .product__table-value {
+      font-size: var(--scale-5);
+    }
   }
 
   /* Mobile */

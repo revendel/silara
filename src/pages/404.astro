@@ -1,0 +1,207 @@
+---
+/**
+ * 404 page — "404 Desktop" (Figma node 916:2169)
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import nfHero from '../assets/images/404-hero.webp';
+---
+
+<BaseLayout
+  title="404 — Page Not Found"
+  description="The page you are looking for does not exist or is unavailable."
+  robots="noindex, nofollow"
+>
+  <section class="nf" aria-label="Page not found">
+
+    <!-- Content area -->
+    <div class="nf__content">
+
+      <!-- 404 number + details row -->
+      <div class="nf__hero-block">
+        <p class="nf__number" data-animate="nf-number">404</p>
+
+        <div class="nf__details" data-animate="nf-details">
+          <a href="mailto:contact@silara.org" class="nf__email">contact@silara.org</a>
+          <div class="nf__status">
+            <span>Not Found</span>
+            <span>Or Unavailable</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero image -->
+    <div class="nf__image-container" data-animate="nf-image">
+      <Image
+        src={nfHero}
+        alt=""
+        class="nf__image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+  </section>
+</BaseLayout>
+
+<script>
+  import { springLift, imageReveal } from '../utils/animations';
+
+  function initNotFoundAnimations() {
+    const number  = document.querySelector<HTMLElement>('[data-animate="nf-number"]');
+    const details = document.querySelector<HTMLElement>('[data-animate="nf-details"]');
+    const image   = document.querySelector<HTMLElement>('[data-animate="nf-image"]');
+
+    if (!number) return;
+
+    springLift(number, { y: 50, duration: 1.0 });
+    if (details) springLift(details, { y: 20, duration: 0.8, delay: 0.35 });
+    if (image) imageReveal(image, { delay: 0.45 });
+  }
+
+  document.addEventListener('astro:page-load', initNotFoundAnimations);
+</script>
+
+<style>
+  .nf {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    gap: var(--scale-8); /* 55px */
+    padding: 0 var(--scale-8); /* 55px sides */
+  }
+
+  /* ── Content area ── */
+  .nf__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .nf__hero-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: var(--scale-9); /* 89px */
+    width: 100%;
+  }
+
+  .nf__number {
+    font-size: 233px;
+    line-height: 1;
+    text-align: right;
+    width: 100%;
+  }
+
+  /* Details row: email left, status right */
+  .nf__details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: var(--scale-6); /* 21px */
+    line-height: var(--scale-6);
+  }
+
+  .nf__email {
+    text-decoration: none;
+  }
+
+  .nf__email:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .nf__status {
+    display: flex;
+    gap: var(--scale-8); /* 55px */
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* ── Hero image ── */
+  .nf__image-container {
+    width: 100%;
+    height: 394px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .nf__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* ── Tablet (744 – 1023 px) ── */
+  @media (max-width: 1023px) {
+    .nf {
+      justify-content: flex-start;
+      padding: 0;
+      gap: 0;
+    }
+
+    .nf__content {
+      align-items: center;
+      padding: var(--scale-9) 0;
+      width: 100%;
+      max-width: 634px;
+      margin: 0 auto;
+    }
+
+    .nf__hero-block {
+      gap: var(--scale-9);
+    }
+
+    .nf__number {
+      font-size: 233px;
+    }
+
+    .nf__image-container {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 634 / 394;
+    }
+  }
+
+  /* ── Mobile (≤ 600 px) ── */
+  @media (max-width: 600px) {
+    .nf__content {
+      padding: var(--scale-8) var(--scale-6);
+      max-width: none;
+    }
+
+    .nf__hero-block {
+      gap: var(--scale-7);
+    }
+
+    .nf__number {
+      font-size: 89px;
+    }
+
+    .nf__details {
+      font-size: var(--scale-5);
+      line-height: var(--scale-5);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--scale-5);
+    }
+
+    .nf__status {
+      gap: var(--scale-6);
+    }
+
+    .nf__image-container {
+      aspect-ratio: auto;
+      height: 220px;
+    }
+  }
+</style>

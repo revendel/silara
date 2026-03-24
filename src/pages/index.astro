@@ -3,8 +3,11 @@
  * Vision page — "Intro Desktop" (node 722:219)
  * WordPress equivalent: front-page.php
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Line from '../components/Line.astro';
+import visionHero from '../assets/images/vision-hero.webp';
+import visionSlogan from '../assets/images/vision-slogan.webp';
 ---
 
 <BaseLayout
@@ -44,12 +47,10 @@ import Line from '../components/Line.astro';
 
       <!-- Left: big image -->
       <div class="vision__big-image" data-animate="image-left">
-        <img
-          src="/images/vision-hero.webp"
+        <Image
+          src={visionHero}
           alt="Harvested makhana in a field"
           class="vision__big-image-img"
-          width="982"
-          height="569"
           loading="eager"
           fetchpriority="high"
         />
@@ -74,12 +75,10 @@ import Line from '../components/Line.astro';
           <!-- Small image + slogan -->
           <div class="vision__slogan">
             <div class="vision__slogan-image" data-animate="image-small">
-              <img
-                src="/images/vision-slogan.webp"
+              <Image
+                src={visionSlogan}
                 alt="Makhana superfood close-up"
                 class="vision__slogan-image-img"
-                width="390"
-                height="258"
                 loading="eager"
               />
             </div>
@@ -357,7 +356,7 @@ import Line from '../components/Line.astro';
 </style>
 
 <script>
-  import { animate } from 'motion';
+  import { springLift, fadeIn, lineDraw, imageReveal } from '../utils/animations';
 
   function initVisionAnimations() {
     const headline    = document.querySelector<HTMLElement>('[data-animate="headline"]');
@@ -368,56 +367,17 @@ import Line from '../components/Line.astro';
 
     const lines = Array.from(
       document.querySelectorAll<HTMLElement>('[data-line]')
-    ).filter(l => !l.closest('header')); // header line is animated by BaseLayout
+    ).filter(l => !l.closest('header'));
 
     if (!headline) return;
 
-    // Line below title: 0.35s  |  Line above body: 0.5s
-    lines.forEach((line, i) => {
-      line.style.transformOrigin = 'left center';
-      animate(
-        line as Element,
-        { scaleX: [0, 1] },
-        { duration: 1.0, delay: [0.35, 0.5][i] ?? 0.35, easing: [0.22, 1, 0.36, 1] as const }
-      );
-    });
-
-    // Headline: 0.15s
-    animate(
-      headline as Element,
-      { opacity: [0, 1], y: [30, 0] },
-      { duration: 0.7, delay: 0.15, easing: [0.22, 1, 0.36, 1] as const }
-    );
-
-    // Subheadline: 0.3s
-    animate(
-      subheadline! as Element,
-      { opacity: [0, 1], y: [20, 0] },
-      { duration: 0.6, delay: 0.3, easing: [0.22, 1, 0.36, 1] as const }
-    );
-
-    // Big image: 0.6s
-    animate(
-      imageLeft! as Element,
-      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
-      { duration: 0.65, delay: 0.4, easing: [0.16, 1, 0.3, 1] as const }
-    );
-
-    // Content block: 0.65s — fade only, no movement
-    animate(
-      contentRight! as Element,
-      { opacity: [0, 1] },
-      { duration: 0.7, delay: 0.65, easing: [0.22, 1, 0.36, 1] as const }
-    );
-
-    // Small slogan image: 0.85s
-    animate(
-      imageSmall! as Element,
-      { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
-      { duration: 0.65, delay: 0.55, easing: [0.16, 1, 0.3, 1] as const }
-    );
+    lines.forEach((line, i) => lineDraw(line, { delay: [0.35, 0.5][i] ?? 0.35 }));
+    springLift(headline, { y: 40, delay: 0.15 });
+    springLift(subheadline!, { y: 30, duration: 0.8, delay: 0.28 });
+    imageReveal(imageLeft!, { delay: 0.38 });
+    fadeIn(contentRight!, { delay: 0.62 });
+    imageReveal(imageSmall!, { duration: 0.75, delay: 1.0 });
   }
 
-  // Runs on first page load and after every View Transition navigation
   document.addEventListener('astro:page-load', initVisionAnimations);
 </script>

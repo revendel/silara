@@ -1,0 +1,1 @@
+import{p as t,f as a,l as d}from"./animations.BO6OhK7Q.js";import"./index.DTstjLaA.js";document.addEventListener("astro:page-load",()=>{if(t())return;const e=document.getElementById("main-content");e&&a(e,{duration:.4,delay:0});const n=document.querySelector("header [data-line]");n&&d(n,{duration:1,delay:0})});

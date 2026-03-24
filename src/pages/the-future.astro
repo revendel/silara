@@ -2,7 +2,9 @@
 /**
  * The Future page — "Future Desktop" (Figma node 738:691)
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import futureHero from '../assets/images/future-hero.webp';
 ---
 
 <BaseLayout
@@ -53,12 +55,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Hero image -->
     <div class="future__image-container" data-animate="future-image">
-      <img
-        src="/images/future-hero.webp"
-        alt="Silara SuperFoods — the future of superfoods"
+      <Image
+        src={futureHero}
+        alt="The future of superfoods"
         class="future__image"
-        width="1631"
-        height="409"
         loading="eager"
         fetchpriority="high"
       />
@@ -68,40 +68,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  import { animate } from 'motion';
+  import { springLift, lineDraw, imageReveal } from '../utils/animations';
 
   function initFutureAnimations() {
-    // Title row: fade + lift
     const titleRow = document.querySelector<HTMLElement>('[data-animate="future-title"]');
-    if (titleRow) {
-      animate(titleRow, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, delay: 0.1, easing: [0.22, 1, 0.36, 1] as const });
-    }
+    if (titleRow) springLift(titleRow, { delay: 0.1 });
 
-    // Divider line: scaleX left to right
     const divider = document.querySelector<HTMLElement>('[data-future-line]');
-    if (divider) {
-      divider.style.transformOrigin = 'left center';
-      animate(divider, { scaleX: [0, 1] }, { duration: 0.9, delay: 0.35, easing: [0.22, 1, 0.36, 1] as const });
-    }
+    if (divider) lineDraw(divider);
 
-    // List items: staggered fade + lift
-    const items = document.querySelectorAll<HTMLElement>('.future__list-item');
-    items.forEach((item, i) => {
-      animate(item, { opacity: [0, 1], y: [12, 0] }, { duration: 0.5, delay: 0.45 + i * 0.08, easing: [0.22, 1, 0.36, 1] as const });
+    document.querySelectorAll<HTMLElement>('.future__list-item').forEach((item, i) => {
+      springLift(item, { y: 20, duration: 0.7, delay: 0.45 + i * 0.08 });
     });
 
-    // List separator lines: staggered scaleX left to right
-    const listLines = document.querySelectorAll<HTMLElement>('.future__list-line');
-    listLines.forEach((line, i) => {
-      line.style.transformOrigin = 'left center';
-      animate(line, { scaleX: [0, 1] }, { duration: 0.7, delay: 0.45 + i * 0.1, easing: [0.22, 1, 0.36, 1] as const });
+    document.querySelectorAll<HTMLElement>('.future__list-line').forEach((line, i) => {
+      lineDraw(line, { duration: 1.4, delay: 0.45 + i * 0.12 });
     });
 
-    // Hero image: clip-path swipe up
     const image = document.querySelector<HTMLElement>('[data-animate="future-image"]');
-    if (image) {
-      animate(image, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, delay: 0.5, easing: [0.16, 1, 0.3, 1] as const });
-    }
+    if (image) imageReveal(image, { delay: 0.5 });
   }
 
   document.addEventListener('astro:page-load', initFutureAnimations);

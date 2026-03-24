@@ -22,6 +22,7 @@ import Line from '../components/Line.astro';
         <p class="cp__subheadline">Silara Enterprises</p>
       </div>
       <div class="cp__divider"><Line /></div>
+      <div class="cp__divider-desktop"><Line /></div>
     </div>
 
     <!-- Info + image row -->
@@ -37,12 +38,12 @@ import Line from '../components/Line.astro';
           </div>
         </div>
 
-        <div class="cp__table">
+        <!-- <div class="cp__table">
           <h2 class="cp__table-header">WhatsApp Order</h2>
           <div class="cp__table-row">
             <a href="https://wa.me/918282926852" class="cp__table-value" rel="noopener noreferrer" target="_blank">+91&nbsp; 82&nbsp;82&nbsp;92&nbsp;68&nbsp;52</a>
           </div>
-        </div>
+        </div> -->
 
         <div class="cp__table">
           <h2 class="cp__table-header">Inquiry</h2>
@@ -77,6 +78,9 @@ import Line from '../components/Line.astro';
 
     const divider = document.querySelector<HTMLElement>('.cp__divider [data-line]');
     if (divider) lineDraw(divider);
+
+    const dividerDesktop = document.querySelector<HTMLElement>('.cp__divider-desktop [data-line]');
+    if (dividerDesktop) lineDraw(dividerDesktop, { delay: 0.5 });
 
     document.querySelectorAll<HTMLElement>('.cp__table').forEach((table, i) => {
       springLift(table, { y: 20, duration: 0.7, delay: 0.45 + i * 0.1 });
@@ -126,6 +130,10 @@ import Line from '../components/Line.astro';
 
   .cp__divider {
     padding-bottom: var(--scale-7);
+  }
+
+  .cp__divider-desktop {
+    /* visible by default on desktop */
   }
 
   /* ── Body: info + image ── */
@@ -200,6 +208,10 @@ import Line from '../components/Line.astro';
     }
 
     .cp__divider {
+      display: none;
+    }
+
+    .cp__divider-desktop {
       display: none;
     }
 

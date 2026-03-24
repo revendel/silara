@@ -141,6 +141,20 @@ import nfHero from '../assets/images/404-hero.webp';
     object-position: center;
   }
 
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .nf {
+      gap: var(--scale-6);
+      padding: 0 var(--scale-6);
+    }
+    .nf__hero-block {
+      gap: var(--scale-7);
+    }
+    .nf__status {
+      gap: var(--scale-6);
+    }
+  }
+
   /* ── Tablet (744 – 1023 px) ── */
   @media (max-width: 1023px) {
     .nf {

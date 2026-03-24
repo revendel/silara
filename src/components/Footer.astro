@@ -14,6 +14,7 @@ import Logo from './Logo.astro';
 
   <nav class="site-footer__links" aria-label="Footer navigation">
     <ul class="site-footer__link-list" role="list">
+      <li><a href="https://wa.me/917439285007" target="_blank" rel="noopener noreferrer" class="site-footer__link">Order at +91 7439285007</a></li>
       <li><a href="/terms"   class="site-footer__link">T&amp;C</a></li>
       <li><a href="/privacy" class="site-footer__link">Privacy</a></li>
       <li><span class="site-footer__link">GSTIN: 19CTHPM0710P1ZC</span></li>
@@ -62,6 +63,13 @@ import Logo from './Logo.astro';
   /* ── Tablet/mobile: stacked column ── */
   .site-footer__legal {
     display: none;
+  }
+
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .site-footer {
+      padding: 0 var(--scale-6);
+    }
   }
 
   @media (max-width: 1023px) {

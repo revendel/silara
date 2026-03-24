@@ -157,6 +157,20 @@ import missionHero from '../assets/images/mission-hero.webp';
     max-width: none;
   }
 
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .mission__inner {
+      gap: var(--scale-7);
+      padding: var(--scale-7) var(--scale-6) 0;
+    }
+    .mission__text-row {
+      gap: var(--scale-8);
+    }
+    .mission__title-block {
+      gap: var(--scale-5);
+    }
+  }
+
   /* ── Tablet (744 – 1023 px) ───────────────────────────────────── */
   @media (max-width: 1023px) {
     .mission__inner {

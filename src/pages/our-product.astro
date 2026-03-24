@@ -223,8 +223,8 @@ import productHero from '../assets/images/product-hero.webp';
   .product__headline {
     flex-shrink: 0;
     width: min(737px, 44%);
-    font-size: var(--scale-9);
-    line-height: var(--scale-9);
+    font-size: var(--scale-8);
+    line-height: var(--scale-8);
     font-weight: 400;
     text-transform: capitalize;
     letter-spacing: -0.04em;
@@ -237,8 +237,8 @@ import productHero from '../assets/images/product-hero.webp';
 
   .product__table-header {
     padding: var(--scale-4) var(--scale-4) var(--scale-6);
-    font-size: var(--scale-6);
-    line-height: var(--scale-7);
+    font-size: 16px;
+    line-height: var(--scale-6);
     font-weight: 700;
     text-transform: capitalize;
   }
@@ -264,17 +264,25 @@ import productHero from '../assets/images/product-hero.webp';
   .product__table-label {
     flex-shrink: 0;
     width: 220px;
-    padding: var(--scale-6) var(--scale-9) var(--scale-6) var(--scale-4);
-    font-size: var(--scale-6);
+    padding: var(--scale-5) var(--scale-7) var(--scale-5) var(--scale-4);
+    font-size: 16px;
     font-weight: 400;
   }
 
   .product__table-value {
     flex: 1;
     min-width: 0;
-    padding: var(--scale-6) var(--scale-4);
-    font-size: var(--scale-6);
+    padding: var(--scale-5) var(--scale-4);
+    font-size: 16px;
     font-weight: 400;
+  }
+
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .product {
+      gap: var(--scale-5);
+      padding: 0 var(--scale-6) var(--scale-6);
+    }
   }
 
   /* Tablet */
@@ -388,12 +396,12 @@ import productHero from '../assets/images/product-hero.webp';
       line-height: var(--scale-8);
     }
     .product__table-header {
-      font-size: var(--scale-5);
+      font-size: 16px;
       line-height: var(--scale-6);
     }
     .product__table-label,
     .product__table-value {
-      font-size: var(--scale-5);
+      font-size: 16px;
     }
   }
 

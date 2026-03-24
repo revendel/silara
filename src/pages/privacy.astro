@@ -118,8 +118,8 @@ import Line from '../components/Line.astro';
   .pp__heading-block {
     display: flex;
     flex-direction: column;
-    gap: var(--scale-5); /* 13px */
-    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8); /* 55px top/bottom, 55px left */
+    gap: var(--scale-3);
+    padding: var(--scale-6) 0 var(--scale-6) var(--scale-8);
   }
 
   .pp__headline {
@@ -150,7 +150,7 @@ import Line from '../components/Line.astro';
   .pp__col {
     display: flex;
     flex-direction: column;
-    gap: var(--scale-8);         /* 55px between sections in a column */
+    gap: 0;
   }
 
   /* ── Individual section ── */
@@ -172,6 +172,25 @@ import Line from '../components/Line.astro';
     line-height: var(--scale-6); /* 21px */
     font-weight: 400;
     padding: var(--scale-6) var(--scale-4) var(--scale-6) 0;
+  }
+
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .pp__title-section {
+      padding-bottom: var(--scale-5);
+    }
+    .pp__heading-block {
+      padding: var(--scale-6) 0 var(--scale-6) var(--scale-6);
+      gap: var(--scale-3);
+    }
+    .pp__grid {
+      column-gap: var(--scale-5);
+      row-gap: var(--scale-6);
+      padding: 0 0 var(--scale-7) var(--scale-6);
+    }
+    .pp__col {
+      gap: 0;
+    }
   }
 
   /* ── Tablet ── */

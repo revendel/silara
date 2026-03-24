@@ -109,8 +109,8 @@ import Line from '../components/Line.astro';
   .cp__heading-block {
     display: flex;
     flex-direction: column;
-    gap: var(--scale-5);
-    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8);
+    gap: var(--scale-3);
+    padding: var(--scale-6) 0 var(--scale-6) var(--scale-8);
   }
 
   .cp__headline {
@@ -199,6 +199,24 @@ import Line from '../components/Line.astro';
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .cp__heading-block {
+      padding: var(--scale-6) 0 var(--scale-6) var(--scale-6);
+      gap: var(--scale-3);
+    }
+    .cp__divider {
+      padding-bottom: var(--scale-5);
+    }
+    .cp__body {
+      padding-left: var(--scale-6);
+      gap: var(--scale-6);
+    }
+    .cp__info-col {
+      padding-bottom: var(--scale-6);
+    }
   }
 
   /* ── Tablet ── */

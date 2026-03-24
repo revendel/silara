@@ -121,9 +121,8 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
   .vision__title-block {
     display: flex;
     flex-direction: column;
-    gap: var(--scale-5); /* 13px */
-    padding: var(--scale-8) 0 var(--scale-8) var(--scale-8);
-    /* 55px top/bottom, 55px left */
+    gap: var(--scale-3);
+    padding: var(--scale-6) 0 var(--scale-6) var(--scale-8);
   }
 
   .vision__headline {
@@ -241,6 +240,17 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
   .vision__legal a {
     text-decoration: underline;
     text-underline-offset: 2px;
+  }
+
+  /* ── Fluid desktop (1024–1439px) ── */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .vision__body {
+      padding-right: var(--scale-6);
+    }
+    .vision__title-block {
+      padding: var(--scale-6) 0 var(--scale-6) var(--scale-6);
+      gap: var(--scale-3);
+    }
   }
 
   /* ── Tablet (744 – 1023 px) ───────────────────────────────────── */

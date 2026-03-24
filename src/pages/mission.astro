@@ -50,8 +50,7 @@ import missionHero from '../assets/images/mission-hero.webp';
           src={missionHero}
           alt="Harvested makhana"
           class="mission__image"
-          loading="eager"
-          fetchpriority="high"
+          loading="lazy"
         />
       </div>
 
@@ -130,7 +129,7 @@ import missionHero from '../assets/images/mission-hero.webp';
     line-height: var(--scale-9);
     font-weight: 400;
     text-transform: capitalize;
-    letter-spacing: 0;
+    letter-spacing: -0.04em;
   }
 
   .mission__subheadline {

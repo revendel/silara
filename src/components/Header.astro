@@ -4,7 +4,7 @@
  * WordPress equivalent: header.php / get_header().
  *
  * Desktop (≥ 1024 px): Logo left + inline nav links right.
- * Mobile  (< 1024 px): Logo left + "Other Pages" pill button right
+ * Mobile  (< 1024 px): Logo left + "Menu" pill button right
  *                       → triggers MenuOverlay.
  */
 import Logo from './Logo.astro';
@@ -52,7 +52,7 @@ const currentPath = Astro.url.pathname;
       aria-controls="menu-overlay"
       id="menu-toggle"
     >
-      Other Pages
+      Menu
     </button>
   </div>
   <Line />

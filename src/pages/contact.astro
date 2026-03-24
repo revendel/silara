@@ -22,7 +22,6 @@ import Line from '../components/Line.astro';
         <p class="cp__subheadline">Silara Enterprises</p>
       </div>
       <div class="cp__divider"><Line /></div>
-      <Line />
     </div>
 
     <!-- Info + image row -->
@@ -79,9 +78,6 @@ import Line from '../components/Line.astro';
     const divider = document.querySelector<HTMLElement>('.cp__divider [data-line]');
     if (divider) lineDraw(divider);
 
-    const thirdLine = document.querySelector<HTMLElement>('.cp__title-section > [data-line]');
-    if (thirdLine) lineDraw(thirdLine, { delay: 0.5 });
-
     document.querySelectorAll<HTMLElement>('.cp__table').forEach((table, i) => {
       springLift(table, { y: 20, duration: 0.7, delay: 0.45 + i * 0.1 });
     });
@@ -117,7 +113,7 @@ import Line from '../components/Line.astro';
     font-size: clamp(var(--scale-8), 5vw, var(--scale-9));
     line-height: 1;
     font-weight: 400;
-    letter-spacing: 0;
+    letter-spacing: -0.04em;
   }
 
   .cp__subheadline {

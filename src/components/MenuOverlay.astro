@@ -5,7 +5,7 @@
  *
  * Full-screen white sheet that drops down below the header.
  * Header stays on top (z-index: 80). This overlay is z-index: 50.
- * The header "Other Pages" button text toggles to "Close" when open.
+ * The header "Menu" button text toggles to "Close" when open.
  */
 const navLinks = [
   { href: '/',            label: 'Home'        },
@@ -136,7 +136,7 @@ const navLinks = [
       isOpen = false;
       allToggles.forEach(btn => {
         btn.setAttribute('aria-expanded', 'false');
-        btn.textContent = 'Other Pages';
+        btn.textContent = 'Menu';
       });
       document.body.style.overflow = '';
 

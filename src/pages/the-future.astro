@@ -59,8 +59,7 @@ import futureHero from '../assets/images/future-hero.webp';
         src={futureHero}
         alt="The future of superfoods"
         class="future__image"
-        loading="eager"
-        fetchpriority="high"
+        loading="lazy"
       />
     </div>
 
@@ -113,6 +112,7 @@ import futureHero from '../assets/images/future-hero.webp';
     line-height: var(--scale-8);
     font-weight: 400;
     text-transform: capitalize;
+    letter-spacing: -0.04em;
   }
 
   .future__intro {

@@ -7,7 +7,20 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Line from '../components/Line.astro';
 import visionHero from '../assets/images/vision-hero.webp';
-import visionSlogan from '../assets/images/vision-slogan.webp';
+// Uncomment these 3 when you add the slogan images to src/assets/images/:
+import visionSlogan1 from '../assets/images/vision-slogan-1.webp';
+import visionSlogan2 from '../assets/images/vision-slogan-2.webp';
+import visionSlogan3 from '../assets/images/vision-slogan-3.webp';
+// Fallback (uncomment only if you don't have the 3 new images):
+// import visionSlogan from '../assets/images/vision-slogan.webp';
+
+const visionSloganSlides = [
+  visionSlogan1,
+  visionSlogan2,
+  visionSlogan3,
+  // Or use this if you only have the old image:
+  // visionSlogan,
+];
 ---
 
 <BaseLayout
@@ -72,15 +85,19 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
             </p>
           </div>
 
-          <!-- Small image + slogan -->
+          <!-- Small slogan slideshow + slogan -->
           <div class="vision__slogan">
-            <div class="vision__slogan-image" data-animate="image-small">
-              <Image
-                src={visionSlogan}
-                alt="Makhana superfood close-up"
-                class="vision__slogan-image-img"
-                loading="lazy"
-              />
+            <div class="vision__slogan-image" data-animate="image-small" id="vision-slogan-slideshow">
+              {visionSloganSlides.map((slide, i) => (
+                <div class={`vision__slogan-slide ${i === 0 ? 'active' : ''}`} data-slide-index={i}>
+                  <Image
+                    src={slide}
+                    alt={`Vision slogan image ${i + 1}`}
+                    class="vision__slogan-image-img"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              ))}
             </div>
             <p class="vision__slogan-text">Food for the next frontier.</p>
           </div>
@@ -210,6 +227,20 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
     min-height: 200px;
     flex-shrink: 0;
     overflow: hidden;
+  }
+
+  .vision__slogan-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    z-index: 1;
+    clip-path: inset(0 0 0 0);
+    transition: opacity 0.35s ease;
+  }
+
+  .vision__slogan-slide.active {
+    opacity: 1;
+    z-index: 2;
   }
 
   .vision__slogan-image-img {
@@ -366,7 +397,43 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
 </style>
 
 <script>
-  import { springLift, fadeIn, lineDraw, imageReveal } from '../utils/animations';
+  import { animate } from 'motion';
+  import { springLift, fadeIn, lineDraw, imageReveal, EASE_OUT, SPRING } from '../utils/animations';
+
+  function startVisionSloganSlideshow() {
+    const slides = Array.from(document.querySelectorAll<HTMLElement>('.vision__slogan-slide'));
+    if (slides.length < 2) return;
+
+    let current = 0;
+    const intervalMs = 5000;
+    const duration = 0.75;
+
+    function goToSlide(next) {
+      if (next === current) return;
+      const prevSlide = slides[current];
+      const nextSlide = slides[next];
+
+      prevSlide.classList.remove('active');
+      nextSlide.classList.add('active');
+
+      nextSlide.style.clipPath = 'inset(100% 0 0 0)';
+      animate(nextSlide, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration, easing: EASE_OUT });
+
+      const nextImg = nextSlide.querySelector<HTMLElement>('img');
+      if (nextImg) {
+        animate(nextImg, { scale: [1.1, 1.0], y: [20, 0] }, { duration: duration + 0.2, easing: SPRING });
+      }
+
+      current = next;
+    }
+
+    setInterval(() => goToSlide((current + 1) % slides.length), intervalMs);
+
+    // Reveal first slide once at page load
+    const first = slides[0];
+    first.classList.add('active');
+    imageReveal(first, { delay: 0, duration });
+  }
 
   function initVisionAnimations() {
     const headline    = document.querySelector<HTMLElement>('[data-animate="headline"]');
@@ -387,6 +454,8 @@ import visionSlogan from '../assets/images/vision-slogan.webp';
     imageReveal(imageLeft!, { delay: 0.38 });
     fadeIn(contentRight!, { delay: 0.62 });
     imageReveal(imageSmall!, { duration: 0.75, delay: 1.0 });
+
+    startVisionSloganSlideshow();
   }
 
   document.addEventListener('astro:page-load', initVisionAnimations);

@@ -139,5 +139,10 @@ const currentPath = Astro.url.pathname;
     .site-header__menu-btn {
       display: none;
     }
+
+    /* Hide logo when lightbox is open on mobile to avoid clash with close button */
+    :global(html[data-lightbox-open="true"] .logo--smaller) {
+      visibility: hidden;
+    }
   }
 </style>

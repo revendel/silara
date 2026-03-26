@@ -151,6 +151,7 @@ import productHero from '../assets/images/product-hero.webp';
       closeWrap!.classList.add('is-visible');
       closeWrap!.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      document.documentElement.setAttribute('data-lightbox-open', 'true');
       headerChildren.forEach((el, i) => { if (i > 0) el.style.visibility = 'hidden'; });
       if (menuBtnBot) menuBtnBot.style.visibility = 'hidden';
       // Lightbox image: spring-physics wipe + inner drift
@@ -168,6 +169,7 @@ import productHero from '../assets/images/product-hero.webp';
       closeWrap!.classList.remove('is-visible');
       closeWrap!.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      document.documentElement.removeAttribute('data-lightbox-open');
       headerChildren.forEach(el => el.style.visibility = '');
       if (menuBtnBot) menuBtnBot.style.visibility = '';
       openBtn!.focus();

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Invoice — Silara</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       BRAND TOKENS — mirrors src/styles/tokens.css exactly
+    ═══════════════════════════════════════════════════════════════ */
+    :root {
+      /* Fibonacci scale */
+      --scale-2: 3px;
+      --scale-3: 5px;
+      --scale-4: 8px;
+      --scale-5: 13px;
+      --scale-6: 21px;
+      --scale-7: 34px;
+      --scale-8: 55px;
+      --scale-9: 89px;
+      --scale-10: 144px;
+
+      /* Brand colours */
+      --primary: #1d1d1d;
+      --base: #ffffff;
+      --lines: #d6d6d6;
+
+      /* ── Typography extensions ──────────────────────────────────
+         --scale-h4 is a named style in the Figma design system ("H4")
+         not present in the Fibonacci sequence but part of the system. */
+      --scale-h4: 16px;
+      --tracking-title: calc(var(--scale-10) * -0.04);
+      /* −4% = −5.76px */
+      --size-tm: calc(var(--scale-7) * 0.645);
+      /* superscript ~21.93px */
+
+      /* ── Borders ───────────────────────────────────────────────── */
+      --border-thin: 1px;
+      /* hairline — minimum CSS unit */
+
+      /* ── A4 page at 96 dpi ─────────────────────────────────────── */
+      --page-width: 1038px;
+      --page-height: 1500px;
+
+      /* ── Layout columns (from Figma design) ────────────────────── */
+      --col-company: 405px;
+      --col-date-values: 104px;
+      --col-description-min: 358px;
+      --col-totals: 424px;
+      --col-totals-left: 146px;
+      --col-totals-right: 59px;
+      --col-ship-from: 372px;
+      --col-ship-to: 233px;
+      --col-tnc: 363px;
+      --col-footer-phone: 133px;
+      --col-footer-email: 129px;
+      --col-footer-website: 72px;
+      --col-footer-tagline: 139px;
+
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FONTS — PP Neue Montreal
+    ═══════════════════════════════════════════════════════════════ */
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('./fonts/PPNeueMontreal-Regular.woff2') format('woff2'),
+        url('./fonts/PPNeueMontreal-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('./fonts/PPNeueMontreal-Bold.woff2') format('woff2'),
+        url('./fonts/PPNeueMontreal-Bold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════════════════════════════ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background: var(--lines);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: var(--scale-7) 0;
+      font-family: 'Neue Montreal', sans-serif;
+      font-weight: 400;
+      color: var(--primary);
+      background: var(--lines);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PAGE SHELL — A4
+    ═══════════════════════════════════════════════════════════════ */
+    .invoice {
+      width: var(--page-width);
+      min-height: var(--page-height);
+      background-color: var(--base);
+      color: var(--primary);
+      padding: var(--scale-8) var(--scale-8) 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-9);
+    }
+
+    /* ── Wraps "without footer" + "bottom area" ─── */
+    .invoice__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-9);
+    }
+
+    /* ── Wraps top-content + middle-content ─── */
+    .invoice__upper {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-9);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SEPARATORS
+    ═══════════════════════════════════════════════════════════════ */
+    .line {
+      display: block;
+      width: 100%;
+      height: 0;
+      border: none;
+      border-top: var(--scale-2) solid var(--lines);
+      flex-shrink: 0;
+    }
+
+    .line--medium {
+      border-top-width: var(--scale-3);
+      border-top-color: var(--lines);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TOP CONTENT — header + meta + lines + items grid
+    ═══════════════════════════════════════════════════════════════ */
+    .top-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-7);
+      width: 100%;
+    }
+
+    /* INVOICE  (#00001) */
+    .invoice-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .invoice-header__title {
+      font-size: var(--scale-10);
+      line-height: var(--scale-10);
+      letter-spacing: var(--tracking-title);
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .invoice-header__number {
+      font-size: var(--scale-8);
+      line-height: var(--scale-8);
+      font-weight: 400;
+    }
+
+    /* DATE / Company row */
+    .invoice-meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .date-block {
+      display: flex;
+      gap: var(--scale-7);
+      align-items: flex-end;
+      font-size: var(--scale-6);
+      line-height: var(--scale-6);
+    }
+
+    .date-block__values {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+      align-items: flex-end;
+      width: var(--col-date-values);
+    }
+
+    .company-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+      align-items: flex-end;
+      width: var(--col-company);
+    }
+
+    .company-block__brand-row {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .company-block__name {
+      font-size: var(--scale-7);
+      line-height: var(--scale-7);
+    }
+
+    .company-block__name sup {
+      font-size: var(--size-tm);
+      line-height: 0;
+      vertical-align: super;
+    }
+
+    .company-block__year {
+      font-size: var(--scale-7);
+      line-height: var(--scale-7);
+    }
+
+    .company-block__entity {
+      font-size: var(--scale-7);
+      line-height: var(--scale-7);
+      text-align: right;
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ITEMS GRID — 5 columns
+    ═══════════════════════════════════════════════════════════════ */
+    .items-grid {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .items-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .items-col--description {
+      min-width: var(--col-description-min);
+    }
+
+    .items-col--amount {
+      align-items: flex-end;
+    }
+
+    .items-col__cell {
+      font-size: var(--scale-h4);
+      line-height: var(--scale-h4);
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       MIDDLE CONTENT — totals + outstanding
+    ═══════════════════════════════════════════════════════════════ */
+    .middle-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+      align-items: flex-end;
+      width: 100%;
+    }
+
+    .totals-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: var(--col-totals);
+      font-size: var(--scale-h4);
+      line-height: var(--scale-h4);
+    }
+
+    .totals-grid__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-7);
+      width: var(--col-totals-left);
+    }
+
+    .totals-grid__left-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+    }
+
+    .totals-grid__right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-7);
+      align-items: flex-end;
+      width: var(--col-totals-right);
+      white-space: nowrap;
+    }
+
+    .totals-grid__right-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+      align-items: flex-end;
+    }
+
+    .outstanding-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: var(--col-totals);
+      font-size: var(--scale-h4);
+      line-height: var(--scale-h4);
+      white-space: nowrap;
+    }
+
+    .text-bold {
+      font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BOTTOM AREA — addresses + T&C + footer
+    ═══════════════════════════════════════════════════════════════ */
+    .bottom-area {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-7);
+    }
+
+    .footer-text-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-7);
+    }
+
+    .addresses-row {
+      display: flex;
+      gap: var(--scale-7);
+      align-items: flex-start;
+    }
+
+    .address-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-5);
+    }
+
+    .address-block--ship-from {
+      width: var(--col-ship-from);
+    }
+
+    .address-block--ship-to {
+      width: var(--col-ship-to);
+    }
+
+    .address-block__heading {
+      font-size: var(--scale-6);
+      line-height: var(--scale-6);
+    }
+
+    .address-block__details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-4);
+      font-size: var(--scale-5);
+      line-height: var(--scale-5);
+    }
+
+    .address-block__details p {
+      line-height: calc(var(--scale-5) + var(--scale-3));
+      /* scale-5 + scale-3 = 13+5 = 18px */
+    }
+
+    .address-block__place-of-supply {
+      font-size: var(--scale-h4);
+      line-height: var(--scale-h4);
+    }
+
+    .tnc-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-5);
+      width: var(--col-tnc);
+    }
+
+    .tnc-block__heading {
+      font-size: var(--scale-6);
+      line-height: var(--scale-6);
+    }
+
+    .tnc-block__body {
+      font-size: var(--scale-5);
+      line-height: calc(var(--scale-5) + var(--scale-3));
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FOOTER ROW
+    ═══════════════════════════════════════════════════════════════ */
+    .invoice-footer {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-6);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--scale-h4);
+      line-height: var(--scale-h4);
+    }
+
+    .footer-left {
+      display: flex;
+      gap: var(--scale-8);
+      align-items: center;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--scale-4);
+    }
+
+    .footer-col--phone {
+      width: var(--col-footer-phone);
+    }
+
+    .footer-col--email {
+      width: var(--col-footer-email);
+    }
+
+    .footer-col--website {
+      width: var(--col-footer-website);
+    }
+
+    .footer-tagline {
+      width: var(--col-footer-tagline);
+      text-align: right;
+      line-height: calc(var(--scale-h4) + var(--scale-3));
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PRINT — fits A4 at 100% scale with no manual adjustment
+       Maths: A4 = 210mm = 794px at 96dpi; design = 1038px
+              zoom = 794 / 1038 ≈ 0.765
+    ═══════════════════════════════════════════════════════════════ */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media print {
+      html {
+        background: white;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+        display: block;
+      }
+
+      .invoice {
+        zoom: 0.765;
+        padding-bottom: var(--scale-8);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="invoice">
+    <div class="invoice__body">
+
+      <!-- ── UPPER: top content + middle content ── -->
+      <div class="invoice__upper">
+
+        <!-- TOP CONTENT -->
+        <div class="top-content">
+
+          <!-- Header row -->
+          <div class="invoice-header">
+            <p class="invoice-header__title">INVOICE</p>
+            <p class="invoice-header__number">(#00001)</p>
+          </div>
+
+          <!-- Meta row: date + company -->
+          <div class="invoice-meta">
+
+            <div class="date-block">
+              <p>DATE</p>
+              <div class="date-block__values">
+                <p style="text-align:right;">2027</p>
+                <p>26 MARCH</p>
+              </div>
+            </div>
+
+            <div class="company-block">
+              <div class="company-block__brand-row">
+                <p class="company-block__name">Silara SuperFoods<sup>TM</sup></p>
+                <p class="company-block__year">2027</p>
+              </div>
+              <p class="company-block__entity">Silara Enterprises</p>
+            </div>
+
+          </div>
+
+          <!-- Double separator -->
+          <div class="line"></div>
+          <div class="line line--medium"></div>
+
+          <!-- Items grid — 5 columns -->
+          <div class="items-grid">
+
+            <div class="items-col items-col--description">
+              <p class="items-col__cell">Description</p>
+              <div class="line"></div>
+              <p class="items-col__cell">FoxNuts (HSN 1904)</p>
+              <div class="line"></div>
+              <p class="items-col__cell">6 Month Membership</p>
+              <div class="line"></div>
+            </div>
+
+            <div class="items-col">
+              <p class="items-col__cell">PRICE</p>
+              <div class="line"></div>
+              <p class="items-col__cell">150 INR</p>
+              <div class="line"></div>
+              <p class="items-col__cell">150 INR</p>
+              <div class="line"></div>
+            </div>
+
+            <div class="items-col">
+              <p class="items-col__cell">QUANTITY</p>
+              <div class="line"></div>
+              <p class="items-col__cell">01</p>
+              <div class="line"></div>
+              <p class="items-col__cell">01</p>
+              <div class="line"></div>
+            </div>
+
+            <div class="items-col">
+              <p class="items-col__cell">DISCOUNT</p>
+              <div class="line"></div>
+              <p class="items-col__cell">0%</p>
+              <div class="line"></div>
+              <p class="items-col__cell">0%</p>
+              <div class="line"></div>
+            </div>
+
+            <div class="items-col items-col--amount">
+              <p class="items-col__cell">AMOUNT</p>
+              <div class="line"></div>
+              <p class="items-col__cell">150 INR</p>
+              <div class="line"></div>
+              <p class="items-col__cell">150 INR</p>
+              <div class="line"></div>
+            </div>
+
+          </div>
+          <!-- end items grid -->
+
+        </div>
+        <!-- end top content -->
+
+        <!-- MIDDLE CONTENT — totals -->
+        <div class="middle-content">
+
+          <div class="totals-grid">
+            <div class="totals-grid__left">
+              <div class="totals-grid__left-group">
+                <p>SUB TOTAL</p>
+                <p>GST (0% Export LUT)</p>
+                <p class="text-bold">TOTAL</p>
+              </div>
+              <p class="text-bold">AMOUNT PAID</p>
+            </div>
+            <div class="totals-grid__right">
+              <div class="totals-grid__right-group">
+                <p>999 INR</p>
+                <p>0 INR</p>
+                <p class="text-bold">999 INR</p>
+              </div>
+              <p class="text-bold">89,999 INR</p>
+            </div>
+          </div>
+
+          <div class="line"></div>
+
+          <div class="outstanding-row">
+            <p>OUTSTANDING AMOUNT</p>
+            <p>0 INR</p>
+          </div>
+
+          <div class="line line--medium"></div>
+          <div class="line line--medium"></div>
+
+        </div>
+        <!-- end middle content -->
+
+      </div>
+      <!-- end upper -->
+
+      <!-- BOTTOM AREA — addresses, T&C, footer -->
+      <div class="bottom-area">
+
+        <div class="footer-text-blocks">
+
+          <!-- Addresses -->
+          <div class="addresses-row">
+
+            <div class="address-block address-block--ship-from">
+              <p class="address-block__heading">SHIP FROM</p>
+              <div class="address-block__details">
+                <p>Silara Enterprises, 383, Purbachal Kalitala Road, Birendra Bhawan, 12/2 Squareland Park, Haltu,
+                  Garfa, Kolkata, West Bengal, India</p>
+                <p>GSTIN: 19CTHPM0710P1ZC</p>
+                <p class="address-block__place-of-supply">Place of Supply: State of West Bengal</p>
+              </div>
+            </div>
+
+            <div class="address-block address-block--ship-to">
+              <p class="address-block__heading">SHIP TO</p>
+              <div class="address-block__details">
+                <p>Zin Zang, 45 Bukit Batok, Ansang Peng, Geylang, Singapore</p>
+                <p>Business Registration: 763284627B</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Payment Terms & Conditions -->
+          <div class="tnc-block">
+            <p class="tnc-block__heading">PAYMENT TERMS &amp; CONDITIONS</p>
+            <p class="tnc-block__body">Full payment is due within 15 days of the invoice date. Please ensure all
+              payments are made in the invoiced currency; any intermediary bank charges or currency conversion fees are
+              the responsibility of the remitter. For international transfers, please include the Invoice Number as a
+              reference to ensure timely reconciliation. Late payments may be subject to a monthly interest charge of
+              1.5% on the outstanding balance.</p>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="invoice-footer">
+          <div class="line line--medium"></div>
+          <div class="footer-row">
+            <div class="footer-left">
+              <div class="footer-col footer-col--phone">
+                <p>PHONE:</p>
+                <p>+91 82 82 92 86 52</p>
+              </div>
+              <div class="footer-col footer-col--email">
+                <p>EMAIL:</p>
+                <p>contact@silara.org</p>
+              </div>
+              <div class="footer-col footer-col--website">
+                <p>WEBSITE:</p>
+                <p>silara.org</p>
+              </div>
+            </div>
+            <p class="footer-tagline">SuperFoods for a Stronger Planet.</p>
+          </div>
+        </div>
+
+      </div>
+      <!-- end bottom area -->
+
+    </div>
+  </div>
+
+</body>
+
+</html>

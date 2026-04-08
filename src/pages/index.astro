@@ -3,14 +3,14 @@
  * Vision page — "Intro Desktop" (node 722:219)
  * WordPress equivalent: front-page.php
  */
-import { Image } from 'astro:assets';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Line from '../components/Line.astro';
-import visionHero from '../assets/images/vision-hero.webp';
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Line from "../components/Line.astro";
+import visionHero from "../assets/images/vision-hero.webp";
 // Uncomment these 3 when you add the slogan images to src/assets/images/:
-import visionSlogan1 from '../assets/images/vision-slogan-1.webp';
-import visionSlogan2 from '../assets/images/vision-slogan-2.webp';
-import visionSlogan3 from '../assets/images/vision-slogan-3.webp';
+import visionSlogan1 from "../assets/images/vision-slogan-1.webp";
+import visionSlogan2 from "../assets/images/vision-slogan-2.webp";
+import visionSlogan3 from "../assets/images/vision-slogan-3.webp";
 // Fallback (uncomment only if you don't have the 3 new images):
 // import visionSlogan from '../assets/images/vision-slogan.webp';
 
@@ -24,7 +24,7 @@ const visionSloganSlides = [
 ---
 
 <BaseLayout
-  title="Makhana Foxnut Superfood Snacks"
+  title="Makhana Foxnut Food Snacks"
   description="Buy premium makhana foxnut (popped lotus seeds) — a nutrient-dense superfood and healthy snack. High protein, low calorie, gluten-free. Silara SuperFoods delivers clean health food for modern life."
   keywords="makhana, foxnut, superfood, health food, lotus seeds, healthy snacks India, plant protein, gluten free snacks, popped makhana, foxnut benefits, makhana benefits"
 >
@@ -35,7 +35,7 @@ const visionSloganSlides = [
       "@type": "Organization",
       "name": "Silara SuperFoods",
       "url": "https://silara.org",
-      "description": "Premium makhana foxnut superfood snacks built for modern healthy living.",
+      "description": "Premium makhana foxnut food snacks built for modern healthy living.",
       "email": "contact@silara.org",
       "sameAs": ["https://silara.org"],
       "foundingLocation": "India",
@@ -44,12 +44,13 @@ const visionSloganSlides = [
   </script>
 
   <section class="vision" aria-label="Our Vision">
-
     <!-- ── Title block ───────────────────────────────────────── -->
     <div class="vision__title-section">
       <div class="vision__title-block">
         <h1 class="vision__headline" data-animate="headline">Our Vision</h1>
-        <p  class="vision__subheadline" data-animate="subheadline">Superfoods for a stronger planet.</p>
+        <p class="vision__subheadline" data-animate="subheadline">
+          Foods for a stronger planet.
+        </p>
       </div>
       <Line />
     </div>
@@ -57,7 +58,6 @@ const visionSloganSlides = [
 
     <!-- ── Content body ──────────────────────────────────────── -->
     <div class="vision__body">
-
       <!-- Left: big image -->
       <div class="vision__big-image" data-animate="image-left">
         <Image
@@ -71,47 +71,52 @@ const visionSloganSlides = [
 
       <!-- Right: text content -->
       <div class="vision__content" data-animate="content-right">
-
         <div class="vision__content-top">
-
           <!-- Description paragraph -->
           <div class="vision__description">
             <p>
               As humanity looks toward the future, the foods that sustain us
               must become smarter, cleaner, and more powerful. Silara draws
               inspiration from the kind of nutrition that could fuel the next
-              generation of exploration — compact, nutrient-dense, and built
-              for performance.
+              generation of exploration — compact, nutrient-dense, and built for
+              performance.
             </p>
           </div>
 
           <!-- Small slogan slideshow + slogan -->
           <div class="vision__slogan">
-            <div class="vision__slogan-image" data-animate="image-small" id="vision-slogan-slideshow">
-              {visionSloganSlides.map((slide, i) => (
-                <div class={`vision__slogan-slide ${i === 0 ? 'active' : ''}`} data-slide-index={i}>
-                  <Image
-                    src={slide}
-                    alt={`Vision slogan image ${i + 1}`}
-                    class="vision__slogan-image-img"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
-              ))}
+            <div
+              class="vision__slogan-image"
+              data-animate="image-small"
+              id="vision-slogan-slideshow"
+            >
+              {
+                visionSloganSlides.map((slide, i) => (
+                  <div
+                    class={`vision__slogan-slide ${i === 0 ? "active" : ""}`}
+                    data-slide-index={i}
+                  >
+                    <Image
+                      src={slide}
+                      alt={`Vision slogan image ${i + 1}`}
+                      class="vision__slogan-image-img"
+                      loading={i === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))
+              }
             </div>
             <p class="vision__slogan-text">Food for the next frontier.</p>
           </div>
-
         </div>
 
         <!-- Legal / trademark line -->
         <p class="vision__legal">
-          Silara SuperFoods is a trademark of Silara Enterprises and
-          unauthorized use is prohibited by law. Reach us at
+          Looking to import next generation foods?<br>
+          Reach us at
           <a href="mailto:contact@silara.org">contact@silara.org</a>
           for any feedback or inquiries.
         </p>
-
       </div>
     </div>
   </section>
@@ -143,14 +148,22 @@ const visionSloganSlides = [
   }
 
   .vision__headline {
-    font-size: clamp(var(--scale-8), 5vw, var(--scale-9)); /* 55–89px fluid — Figma Hero style */
+    font-size: clamp(
+      var(--scale-8),
+      5vw,
+      var(--scale-9)
+    ); /* 55–89px fluid — Figma Hero style */
     line-height: 1;
     font-weight: 400;
     letter-spacing: -0.04em;
   }
 
   .vision__subheadline {
-    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid — Figma H1 style */
+    font-size: clamp(
+      var(--scale-6),
+      1.9vw,
+      var(--scale-7)
+    ); /* 21–34px fluid — Figma H1 style */
     line-height: var(--scale-7); /* 34px — proportional to text size */
     font-weight: 400;
     text-transform: capitalize;
@@ -207,7 +220,7 @@ const visionSloganSlides = [
   .vision__description {
     flex: 1;
     padding-top: var(--scale-4); /* 8px — was scale-6/21px */
-    font-size: var(--scale-6);  /* 21px */
+    font-size: var(--scale-6); /* 21px */
     line-height: var(--scale-6);
     min-width: 0;
   }
@@ -253,7 +266,11 @@ const visionSloganSlides = [
   }
 
   .vision__slogan-text {
-    font-size: clamp(var(--scale-6), 1.9vw, var(--scale-7)); /* 21–34px fluid — Figma H1 style */
+    font-size: clamp(
+      var(--scale-6),
+      1.9vw,
+      var(--scale-7)
+    ); /* 21–34px fluid — Figma H1 style */
     line-height: var(--scale-7); /* 34px — was scale-8/55px */
     text-transform: capitalize;
     font-weight: 400;
@@ -373,7 +390,11 @@ const visionSloganSlides = [
     }
 
     .vision__headline {
-      font-size: clamp(var(--scale-7), 12vw, var(--scale-8)); /* 34–55px fluid */
+      font-size: clamp(
+        var(--scale-7),
+        12vw,
+        var(--scale-8)
+      ); /* 34–55px fluid */
     }
 
     .vision__subheadline {
@@ -397,11 +418,20 @@ const visionSloganSlides = [
 </style>
 
 <script>
-  import { animate } from 'motion';
-  import { springLift, fadeIn, lineDraw, imageReveal, EASE_OUT, SPRING } from '../utils/animations';
+  import { animate } from "motion";
+  import {
+    springLift,
+    fadeIn,
+    lineDraw,
+    imageReveal,
+    EASE_OUT,
+    SPRING,
+  } from "../utils/animations";
 
   function startVisionSloganSlideshow() {
-    const slides = Array.from(document.querySelectorAll<HTMLElement>('.vision__slogan-slide'));
+    const slides = Array.from(
+      document.querySelectorAll<HTMLElement>(".vision__slogan-slide"),
+    );
     if (slides.length < 2) return;
 
     let current = 0;
@@ -413,15 +443,23 @@ const visionSloganSlides = [
       const prevSlide = slides[current];
       const nextSlide = slides[next];
 
-      prevSlide.classList.remove('active');
-      nextSlide.classList.add('active');
+      prevSlide.classList.remove("active");
+      nextSlide.classList.add("active");
 
-      nextSlide.style.clipPath = 'inset(100% 0 0 0)';
-      animate(nextSlide, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration, easing: EASE_OUT });
+      nextSlide.style.clipPath = "inset(100% 0 0 0)";
+      animate(
+        nextSlide,
+        { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] },
+        { duration, easing: EASE_OUT },
+      );
 
-      const nextImg = nextSlide.querySelector<HTMLElement>('img');
+      const nextImg = nextSlide.querySelector<HTMLElement>("img");
       if (nextImg) {
-        animate(nextImg, { scale: [1.1, 1.0], y: [20, 0] }, { duration: duration + 0.2, easing: SPRING });
+        animate(
+          nextImg,
+          { scale: [1.1, 1.0], y: [20, 0] },
+          { duration: duration + 0.2, easing: SPRING },
+        );
       }
 
       current = next;
@@ -431,24 +469,36 @@ const visionSloganSlides = [
 
     // Reveal first slide once at page load
     const first = slides[0];
-    first.classList.add('active');
+    first.classList.add("active");
     imageReveal(first, { delay: 0, duration });
   }
 
   function initVisionAnimations() {
-    const headline    = document.querySelector<HTMLElement>('[data-animate="headline"]');
-    const subheadline = document.querySelector<HTMLElement>('[data-animate="subheadline"]');
-    const imageLeft   = document.querySelector<HTMLElement>('[data-animate="image-left"]');
-    const imageSmall  = document.querySelector<HTMLElement>('[data-animate="image-small"]');
-    const contentRight = document.querySelector<HTMLElement>('[data-animate="content-right"]');
+    const headline = document.querySelector<HTMLElement>(
+      '[data-animate="headline"]',
+    );
+    const subheadline = document.querySelector<HTMLElement>(
+      '[data-animate="subheadline"]',
+    );
+    const imageLeft = document.querySelector<HTMLElement>(
+      '[data-animate="image-left"]',
+    );
+    const imageSmall = document.querySelector<HTMLElement>(
+      '[data-animate="image-small"]',
+    );
+    const contentRight = document.querySelector<HTMLElement>(
+      '[data-animate="content-right"]',
+    );
 
     const lines = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-line]')
-    ).filter(l => !l.closest('header'));
+      document.querySelectorAll<HTMLElement>("[data-line]"),
+    ).filter((l) => !l.closest("header"));
 
     if (!headline) return;
 
-    lines.forEach((line, i) => lineDraw(line, { delay: [0.35, 0.5][i] ?? 0.35 }));
+    lines.forEach((line, i) =>
+      lineDraw(line, { delay: [0.35, 0.5][i] ?? 0.35 }),
+    );
     springLift(headline, { y: 40, delay: 0.15 });
     springLift(subheadline!, { y: 30, duration: 0.8, delay: 0.28 });
     imageReveal(imageLeft!, { delay: 0.38 });
@@ -458,5 +508,5 @@ const visionSloganSlides = [
     startVisionSloganSlideshow();
   }
 
-  document.addEventListener('astro:page-load', initVisionAnimations);
+  document.addEventListener("astro:page-load", initVisionAnimations);
 </script>

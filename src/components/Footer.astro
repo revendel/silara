@@ -6,25 +6,39 @@
  * Large screen: inactive (icon-only) logo left + legal/nav links right.
  * Small screen: stacked column layout.
  */
-import Logo from './Logo.astro';
+import Logo from "./Logo.astro";
 ---
 
-<footer class="site-footer" transition:name="site-footer" transition:animate="none">
+<footer
+  class="site-footer"
+  transition:name="site-footer"
+  transition:animate="none"
+>
   <Logo variant="inactive" />
 
   <nav class="site-footer__links" aria-label="Footer navigation">
     <ul class="site-footer__link-list" role="list">
-      <li><a href="https://wa.me/917439285007" target="_blank" rel="noopener noreferrer" class="site-footer__link">Order at +91 7439285007</a></li>
-      <li><a href="/terms"   class="site-footer__link">T&amp;C</a></li>
+      <li>
+        <a
+          href="https://wa.me/917439285007"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="site-footer__link">Order at +91 7439285007</a
+        >
+      </li>
+      <li><a href="/terms" class="site-footer__link">T&amp;C</a></li>
       <li><a href="/privacy" class="site-footer__link">Privacy</a></li>
       <li><span class="site-footer__link">GSTIN: 19CTHPM0710P1ZC</span></li>
-      <li><span class="site-footer__link">Silara Enterprises</span></li>
+      <li>
+        <span class="site-footer__link"
+          >Silara Foods is a brand by Silara Enterprises</span
+        >
+      </li>
     </ul>
   </nav>
 
   <p class="site-footer__legal">
-    Silara SuperFoods is a trademark of Silara Enterprises and
-    unauthorized use is prohibited by law. Reach us at
+    Looking to import next generation foods? Reach us at
     <a href="mailto:contact@silara.org">contact@silara.org</a>
     for any feedback or inquiries.
   </p>

@@ -20,7 +20,7 @@ interface Props {
 
 const {
   title,
-  description = 'Silara SuperFoods — nutrient-dense superfoods built for modern life.',
+  description = 'Silara Foods — nutrient-dense foods built for modern life.',
   ogImage = '/images/og-default.webp',
   keywords,
   robots,
@@ -45,23 +45,23 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
-    <meta property="og:title"       content={`${title} — Silara SuperFoods`} />
+    <meta property="og:title"       content={`${title} — Silara Foods`} />
     <meta property="og:description" content={description} />
     <meta property="og:url"         content={canonicalURL} />
     <meta property="og:type"        content="website" />
     <meta property="og:image"       content={ogImageURL} />
-    <meta property="og:site_name"   content="Silara SuperFoods" />
+    <meta property="og:site_name"   content="Silara Foods" />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content={`${title} — Silara SuperFoods`} />
+    <meta name="twitter:title"       content={`${title} — Silara Foods`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image"       content={ogImageURL} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <title>{title} — Silara SuperFoods</title>
+    <title>{title} — Silara Foods</title>
 
     <!-- Astro View Transitions: client-side routing + smooth page transitions -->
     <ClientRouter />
@@ -69,7 +69,7 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     <!-- Per-page head additions (JSON-LD, extra meta, etc.) -->
     <slot name="head" />
 
-    <!-- Hotjar Tracking Code for Silara SuperFoods -->
+    <!-- Hotjar Tracking Code for Silara Foods -->
     <script is:inline>
       (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

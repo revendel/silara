@@ -2,28 +2,28 @@
 /**
  * Our Product page — "Product Desktop" (Figma node 737:519)
  */
-import { Image } from 'astro:assets';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import productHero from '../assets/images/product-hero.webp';
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import productHero from "../assets/images/product-hero.webp";
 ---
 
 <BaseLayout
-  title="Popped Makhana Foxnut Superfood Snack"
-  description="Silara's popped makhana foxnut — India's premier superfood snack. High in plant protein, low in calories, gluten-free and roasted for perfect taste. The healthy health food snack you've been looking for."
-  keywords="popped makhana, foxnut, lotus seeds superfood, healthy snack India, makhana protein, foxnut protein, gluten free health food, superfood snack, buy makhana, buy foxnut, makhana calories"
+  title="Popped Makhana Foxnut Food Snack"
+  description="Silara's popped makhana foxnut — India's premier food snack. High in plant protein, low in calories, gluten-free and roasted for perfect taste. The healthy health food snack you've been looking for."
+  keywords="popped makhana, foxnut, lotus seeds food, healthy snack India, makhana protein, foxnut protein, gluten free health food, food snack, buy makhana, buy foxnut, makhana calories"
 >
   <script type="application/ld+json" slot="head">
     {
       "@context": "https://schema.org",
       "@type": "Product",
       "name": "Silara Popped Makhana Foxnut",
-      "description": "Premium popped lotus seeds (makhana / foxnut) — a nutrient-dense superfood snack. High in plant protein, low in calories, gluten-free.",
+      "description": "Premium popped lotus seeds (makhana / foxnut) — a nutrient-dense food snack. High in plant protein, low in calories, gluten-free.",
       "brand": {
         "@type": "Brand",
-        "name": "Silara SuperFoods"
+        "name": "Silara Foods"
       },
-      "category": "Health Food / Superfood Snack",
-      "keywords": "makhana, foxnut, lotus seeds, superfood, health food, gluten free snack, plant protein",
+      "category": "Health Food / Food Snack",
+      "keywords": "makhana, foxnut, lotus seeds, food, health food, gluten free snack, plant protein",
       "offers": {
         "@type": "Offer",
         "availability": "https://schema.org/InStock",
@@ -37,9 +37,12 @@ import productHero from '../assets/images/product-hero.webp';
     }
   </script>
   <section class="product" aria-label="Our Product">
-
     <!-- Image — click to open lightbox -->
-    <button class="product__image-trigger" id="product-lightbox-open" aria-label="View full product image">
+    <button
+      class="product__image-trigger"
+      id="product-lightbox-open"
+      aria-label="View full product image"
+    >
       <div class="product__image-container" data-animate="product-image">
         <Image
           src={productHero}
@@ -53,44 +56,51 @@ import productHero from '../assets/images/product-hero.webp';
 
     <!-- Headline + table -->
     <div class="product__content-row" data-animate="product-content">
-
-      <h2 class="product__headline">Our first superfood launch</h2>
+      <h2 class="product__headline">Our first health food launch</h2>
 
       <div class="product__table">
         <div class="product__table-header">Details</div>
-        <div class="product__table-line" data-table-line aria-hidden="true"></div>
+        <div class="product__table-line" data-table-line aria-hidden="true">
+        </div>
         <div class="product__table-body">
-
           <div class="product__table-row">
             <div class="product__table-label">Description</div>
             <div class="product__table-value">Popped lotus seeds</div>
           </div>
-          <div class="product__table-line" data-table-line aria-hidden="true"></div>
+          <div class="product__table-line" data-table-line aria-hidden="true">
+          </div>
 
           <div class="product__table-row">
             <div class="product__table-label">Details</div>
             <div class="product__table-value">
               Foxnuts, also known as lotus seeds, are airy light and delicately
               crunchy. Naturally rich in plant protein, fiber, and essential
-              minerals, they offer clean, sustained superfood energy.
+              minerals, they offer clean, sustained food energy.
             </div>
           </div>
-          <div class="product__table-line" data-table-line aria-hidden="true"></div>
+          <div class="product__table-line" data-table-line aria-hidden="true">
+          </div>
 
           <div class="product__table-row">
             <div class="product__table-label">Status</div>
             <div class="product__table-value">Contact Us</div>
           </div>
-          <div class="product__table-line" data-table-line aria-hidden="true"></div>
-
+          <div class="product__table-line" data-table-line aria-hidden="true">
+          </div>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- Lightbox overlay -->
-  <div class="product__lightbox" id="product-lightbox" role="dialog" aria-modal="true" aria-label="Product image" aria-hidden="true">
+  <div
+    class="product__lightbox"
+    id="product-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Product image"
+    aria-hidden="true"
+  >
     <div class="product__lightbox-stage">
       <Image
         src={productHero}
@@ -102,91 +112,137 @@ import productHero from '../assets/images/product-hero.webp';
   </div>
 
   <!-- Close button — floats above header z-index -->
-  <div class="product__lightbox-close-wrap" id="product-lightbox-close-wrap" aria-hidden="true">
-    <button class="product__lightbox-close-btn" id="product-lightbox-close" aria-label="Close product image">Close</button>
+  <div
+    class="product__lightbox-close-wrap"
+    id="product-lightbox-close-wrap"
+    aria-hidden="true"
+  >
+    <button
+      class="product__lightbox-close-btn"
+      id="product-lightbox-close"
+      aria-label="Close product image">Close</button
+    >
   </div>
-
 </BaseLayout>
 
 <script>
-  import { springLift, fadeIn, lineDraw, imageReveal, prefersReducedMotion, EASE_OUT, SPRING } from '../utils/animations';
-  import { animate } from 'motion';
+  import {
+    springLift,
+    fadeIn,
+    lineDraw,
+    imageReveal,
+    prefersReducedMotion,
+    EASE_OUT,
+    SPRING,
+  } from "../utils/animations";
+  import { animate } from "motion";
 
   function initProductAnimations() {
-    const image = document.querySelector<HTMLElement>('[data-animate="product-image"]');
+    const image = document.querySelector<HTMLElement>(
+      '[data-animate="product-image"]',
+    );
     if (image) imageReveal(image, { delay: 0.1 });
 
-    const headline = document.querySelector<HTMLElement>('.product__headline');
+    const headline = document.querySelector<HTMLElement>(".product__headline");
     if (headline) springLift(headline, { delay: 0.45 });
 
-    const tableHeader = document.querySelector<HTMLElement>('.product__table-header');
+    const tableHeader = document.querySelector<HTMLElement>(
+      ".product__table-header",
+    );
     if (tableHeader) fadeIn(tableHeader, { duration: 0.4, delay: 0.5 });
 
-    document.querySelectorAll<HTMLElement>('.product__table-row').forEach((row, i) => {
-      fadeIn(row, { duration: 0.4, delay: 0.65 + i * 0.12 });
-    });
+    document
+      .querySelectorAll<HTMLElement>(".product__table-row")
+      .forEach((row, i) => {
+        fadeIn(row, { duration: 0.4, delay: 0.65 + i * 0.12 });
+      });
 
-    document.querySelectorAll<HTMLElement>('[data-table-line]').forEach((line, i) => {
-      lineDraw(line, { duration: 1.4, delay: 0.55 + i * 0.12 });
-    });
+    document
+      .querySelectorAll<HTMLElement>("[data-table-line]")
+      .forEach((line, i) => {
+        lineDraw(line, { duration: 1.4, delay: 0.55 + i * 0.12 });
+      });
   }
 
-  document.addEventListener('astro:page-load', initProductAnimations);
+  document.addEventListener("astro:page-load", initProductAnimations);
 
   function bindLightbox() {
-    const openBtn   = document.getElementById('product-lightbox-open') as HTMLButtonElement | null;
-    const lightbox  = document.getElementById('product-lightbox');
-    const closeWrap = document.getElementById('product-lightbox-close-wrap');
-    const closeBtn  = document.getElementById('product-lightbox-close');
-    const menuBtnBot = document.getElementById('menu-toggle-bottom') as HTMLButtonElement | null;
+    const openBtn = document.getElementById(
+      "product-lightbox-open",
+    ) as HTMLButtonElement | null;
+    const lightbox = document.getElementById("product-lightbox");
+    const closeWrap = document.getElementById("product-lightbox-close-wrap");
+    const closeBtn = document.getElementById("product-lightbox-close");
+    const menuBtnBot = document.getElementById(
+      "menu-toggle-bottom",
+    ) as HTMLButtonElement | null;
 
-    const headerInner = document.querySelector('.site-header__inner');
-    const headerChildren = headerInner ? Array.from(headerInner.children) as HTMLElement[] : [];
+    const headerInner = document.querySelector(".site-header__inner");
+    const headerChildren = headerInner
+      ? (Array.from(headerInner.children) as HTMLElement[])
+      : [];
 
     if (!openBtn || !lightbox || !closeWrap || !closeBtn) return;
 
     function openLightbox() {
-      lightbox!.classList.add('is-open');
-      lightbox!.setAttribute('aria-hidden', 'false');
-      closeWrap!.classList.add('is-visible');
-      closeWrap!.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      document.documentElement.setAttribute('data-lightbox-open', 'true');
-      headerChildren.forEach((el, i) => { if (i > 0) el.style.visibility = 'hidden'; });
-      if (menuBtnBot) menuBtnBot.style.visibility = 'hidden';
+      lightbox!.classList.add("is-open");
+      lightbox!.setAttribute("aria-hidden", "false");
+      closeWrap!.classList.add("is-visible");
+      closeWrap!.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.documentElement.setAttribute("data-lightbox-open", "true");
+      headerChildren.forEach((el, i) => {
+        if (i > 0) el.style.visibility = "hidden";
+      });
+      if (menuBtnBot) menuBtnBot.style.visibility = "hidden";
       // Lightbox image: spring-physics wipe + inner drift
-      const lbImg = lightbox!.querySelector<HTMLElement>('.product__lightbox-img');
+      const lbImg = lightbox!.querySelector<HTMLElement>(
+        ".product__lightbox-img",
+      );
       if (lbImg && !prefersReducedMotion()) {
-        animate(lbImg, { clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] }, { duration: 0.65, easing: EASE_OUT });
-        animate(lbImg, { scale: [1.05, 1.0], y: [15, 0] }, { duration: 0.9, easing: SPRING });
+        animate(
+          lbImg,
+          { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] },
+          { duration: 0.65, easing: EASE_OUT },
+        );
+        animate(
+          lbImg,
+          { scale: [1.05, 1.0], y: [15, 0] },
+          { duration: 0.9, easing: SPRING },
+        );
       }
       closeBtn!.focus();
     }
 
     function closeLightbox() {
-      lightbox!.classList.remove('is-open');
-      lightbox!.setAttribute('aria-hidden', 'true');
-      closeWrap!.classList.remove('is-visible');
-      closeWrap!.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      document.documentElement.removeAttribute('data-lightbox-open');
-      headerChildren.forEach(el => el.style.visibility = '');
-      if (menuBtnBot) menuBtnBot.style.visibility = '';
+      lightbox!.classList.remove("is-open");
+      lightbox!.setAttribute("aria-hidden", "true");
+      closeWrap!.classList.remove("is-visible");
+      closeWrap!.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      document.documentElement.removeAttribute("data-lightbox-open");
+      headerChildren.forEach((el) => (el.style.visibility = ""));
+      if (menuBtnBot) menuBtnBot.style.visibility = "";
       openBtn!.focus();
     }
 
-    openBtn.addEventListener('click', openLightbox);
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-      if (e.target !== lightbox && e.target !== document.querySelector('.product__lightbox-stage')) return;
+    openBtn.addEventListener("click", openLightbox);
+    closeBtn.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (
+        e.target !== lightbox &&
+        e.target !== document.querySelector(".product__lightbox-stage")
+      )
+        return;
       closeLightbox();
     });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox!.classList.contains('is-open')) closeLightbox();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox!.classList.contains("is-open"))
+        closeLightbox();
     });
   }
 
-  document.addEventListener('astro:page-load', bindLightbox);
+  document.addEventListener("astro:page-load", bindLightbox);
 </script>
 
 <style>
@@ -293,7 +349,9 @@ import productHero from '../assets/images/product-hero.webp';
       padding: var(--scale-7);
       gap: var(--scale-8);
     }
-    .product__image-container { height: 320px; }
+    .product__image-container {
+      height: 320px;
+    }
     .product__content-row {
       flex-direction: column;
       gap: var(--scale-8);
@@ -327,7 +385,10 @@ import productHero from '../assets/images/product-hero.webp';
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
     pointer-events: none;
-    transition: opacity 0.35s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+    transition:
+      opacity 0.35s ease,
+      backdrop-filter 0.5s ease,
+      -webkit-backdrop-filter 0.5s ease;
   }
 
   .product__lightbox.is-open {
@@ -413,8 +474,12 @@ import productHero from '../assets/images/product-hero.webp';
       padding: var(--scale-6);
       gap: var(--scale-7);
     }
-    .product__image-container { height: 260px; }
-    .product__headline { font-size: clamp(var(--scale-7), 10vw, var(--scale-8)); }
+    .product__image-container {
+      height: 260px;
+    }
+    .product__headline {
+      font-size: clamp(var(--scale-7), 10vw, var(--scale-8));
+    }
 
     /* Stack label above value */
     .product__table-row {

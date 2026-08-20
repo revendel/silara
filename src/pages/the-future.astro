@@ -100,6 +100,7 @@ import futureHero from '../assets/images/future-hero.webp';
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
   }
 
   /* Title + paragraph row — bottom-aligned, left headline + right paragraph */
@@ -107,6 +108,7 @@ import futureHero from '../assets/images/future-hero.webp';
     display: flex;
     align-items: flex-end;
     padding: var(--scale-8) var(--scale-8);
+    flex-shrink: 0;
   }
 
   .future__headline {
@@ -143,6 +145,7 @@ import futureHero from '../assets/images/future-hero.webp';
     flex-wrap: wrap;
     gap: var(--scale-7);          /* 34px */
     padding: var(--scale-8) var(--scale-8);
+    flex-shrink: 0;
   }
 
   .future__list-item {
@@ -177,11 +180,12 @@ import futureHero from '../assets/images/future-hero.webp';
 
   /* Hero image */
   .future__image-container {
-    height: 409px;
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
     position: relative;
-    flex-shrink: 0;
-    margin-top: auto;
+    width: 100%;
+    margin-top: 0;
   }
 
   .future__image {
@@ -190,17 +194,21 @@ import futureHero from '../assets/images/future-hero.webp';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center bottom;
   }
 
   /* ── Fluid desktop (1024–1439px) ── */
   @media (min-width: 1024px) and (max-width: 1439px) {
     .future__title-row {
-      padding: var(--scale-6) var(--scale-6);
+      padding: var(--scale-7) var(--scale-6);
     }
     .future__list-row {
-      gap: var(--scale-5);
-      padding: var(--scale-6) var(--scale-6);
+      gap: var(--scale-6);
+      padding: var(--scale-7) var(--scale-6);
+    }
+    .future__image-container {
+      flex: 1;
+      min-height: 0;
     }
   }
 
@@ -223,7 +231,7 @@ import futureHero from '../assets/images/future-hero.webp';
     .future__list-item { width: calc(50% - var(--scale-6)); }
     .future__list-line { display: block; }
 
-    .future__image-container { height: 300px; margin-top: 0; }
+    .future__image-container { height: 220px; margin-top: 0; }
     .future { flex: unset; }
   }
 
@@ -234,6 +242,6 @@ import futureHero from '../assets/images/future-hero.webp';
     .future__list-row { padding: var(--scale-7) var(--scale-6); gap: var(--scale-7); }
     .future__list-item { width: 100%; }
     .future__list-line { display: block; }
-    .future__image-container { height: 240px; }
+    .future__image-container { height: 180px; }
   }
 </style>

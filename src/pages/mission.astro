@@ -21,23 +21,25 @@ import missionHero from '../assets/images/mission-hero.webp';
     <!-- inner wrapper: margin-top:auto pushes it to the bottom of the section -->
     <div class="mission__inner">
 
-      <!-- ── Text row (node 726:1116) ──────────────────────────── -->
-      <div class="mission__text-row">
+      <!-- ── Text area: centered vertically in upper blank area ── -->
+      <div class="mission__text-area">
+        <div class="mission__text-row">
 
-        <!-- Left: body paragraph, w=654px in Figma -->
-        <p class="mission__paragraph">
-          We craft foods for modern life — simple, nutritious, and uncompromising. By elevating foods with design and innovation, we transform healthy snacking into something cleaner, smarter, and more purposeful.
-        </p>
-
-        <!-- Right: title + sub-paragraph, flex-1 -->
-        <div class="mission__title-block">
-          <h2 class="mission__headline">Our Mission</h2>
-          <p class="mission__subheadline">
-            To deliver clean, performance-driven foods with uncompromising
-            quality, redefining how the world snacks.
+          <!-- Left: body paragraph, w=654px in Figma -->
+          <p class="mission__paragraph">
+            We craft foods for modern life — simple, nutritious, and uncompromising. By elevating foods with design and innovation, we transform healthy snacking into something cleaner, smarter, and more purposeful.
           </p>
-        </div>
 
+          <!-- Right: title + sub-paragraph, flex-1 -->
+          <div class="mission__title-block">
+            <h2 class="mission__headline">Our Mission</h2>
+            <p class="mission__subheadline">
+              To deliver clean, performance-driven foods with uncompromising
+              quality, redefining how the world snacks.
+            </p>
+          </div>
+
+        </div>
       </div>
 
       <!-- ── Image (node 726:1122) h=526px ─────────────────────── -->
@@ -83,23 +85,30 @@ import missionHero from '../assets/images/mission-hero.webp';
   /*
    * Inner wrapper fills the entire section height.
    * flex-direction: column so text row sits above image.
-   * padding-top: scale-9 (89px) = gap below header.
-   * No bottom padding so image bottom = footer top edge.
    */
   .mission__inner {
     flex: 1;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--scale-9);     /* 89px between text row and image */
-    padding: var(--scale-9) var(--scale-8) 0; /* 89px top, 55px sides, no bottom */
+    padding: 0 var(--scale-8);
   }
 
-  /* ── Text row ─────────────────────────────────────────────────── */
+  /* ── Text area: vertically centers text row in upper blank area ── */
+  .mission__text-area {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* ── Text row: columns align at bottom baseline ─────────────────── */
   .mission__text-row {
     display: flex;
-    align-items: flex-end;   /* Figma: items-end — columns align at baseline */
+    align-items: flex-end;   /* Columns align bottom so both paragraphs share the exact same baseline */
     gap: var(--scale-10);    /* 144px horizontal gap between columns */
+    width: 100%;
   }
 
   /* Left column: fixed width 654px from Figma */
@@ -135,10 +144,10 @@ import missionHero from '../assets/images/mission-hero.webp';
     max-width: 90%;
   }
 
-  /* ── Image container: grows to fill all remaining space ────────── */
+  /* ── Image container: grows dynamically to fill bottom space ──── */
   .mission__image-container {
-    flex: 1;
-    min-height: 0;
+    flex: 1.1;
+    min-height: 260px;
     overflow: hidden;
     position: relative;
   }
@@ -156,8 +165,7 @@ import missionHero from '../assets/images/mission-hero.webp';
   /* ── Fluid desktop (1024–1439px) ── */
   @media (min-width: 1024px) and (max-width: 1439px) {
     .mission__inner {
-      gap: var(--scale-7);
-      padding: var(--scale-7) var(--scale-6) 0;
+      padding: 0 var(--scale-6);
     }
     .mission__text-row {
       gap: var(--scale-8);
@@ -190,8 +198,8 @@ import missionHero from '../assets/images/mission-hero.webp';
     }
 
     .mission__image-container {
-      height: 380px;
-      min-height: 250px;
+      height: 320px;
+      min-height: 220px;
     }
   }
 
@@ -207,8 +215,8 @@ import missionHero from '../assets/images/mission-hero.webp';
     }
 
     .mission__image-container {
-      height: 260px;
-      min-height: 250px;
+      height: 240px;
+      min-height: 200px;
     }
 
     .mission__image {

@@ -2,10 +2,10 @@
 /**
  * Contact page — "contact Desktop" (Figma node 858:2409)
  */
-import { Image } from 'astro:assets';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import contactHero from '../assets/images/contact-hero.webp';
-import Line from '../components/Line.astro';
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import contactHero from "../assets/images/contact-hero.webp";
+import Line from "../components/Line.astro";
 ---
 
 <BaseLayout
@@ -14,7 +14,6 @@ import Line from '../components/Line.astro';
   keywords="buy makhana, buy foxnut, order food snack, health food India, contact silara, makhana wholesale, foxnut wholesale, makhana retail"
 >
   <section class="cp" aria-label="Contact">
-
     <!-- Big title area -->
     <div class="cp__title-section" data-animate="cp-title">
       <div class="cp__heading-block">
@@ -27,14 +26,14 @@ import Line from '../components/Line.astro';
 
     <!-- Info + image row -->
     <div class="cp__body" data-animate="cp-body">
-
       <!-- Left: contact info tables -->
       <div class="cp__info-col">
-
         <div class="cp__table">
           <h2 class="cp__table-header">Email</h2>
           <div class="cp__table-row">
-            <a href="mailto:contact@silara.org" class="cp__table-value">contact@silara.org</a>
+            <a href="mailto:contact@silara.org" class="cp__table-value"
+              >contact@silara.org</a
+            >
           </div>
         </div>
 
@@ -48,10 +47,23 @@ import Line from '../components/Line.astro';
         <div class="cp__table">
           <h2 class="cp__table-header">Inquiry</h2>
           <div class="cp__table-row">
-            <a href="tel:+917439285007" class="cp__table-value">+917439285007</a>
+            <a href="tel:+918282926852" class="cp__table-value"
+              >+9182 82 92 6852</a
+            >
           </div>
         </div>
 
+        <div class="cp__table">
+          <h2 class="cp__table-header">Address</h2>
+          <div class="cp__table-row">
+            <address class="cp__table-value cp__table-value--address">
+              383 Purbachal Kalitala Road<br />
+              Birendra Bhawan, 12/2 Squareland Park<br />
+              East Purbachal, P.O. Haltu<br />
+              Kolkata 700078
+            </address>
+          </div>
+        </div>
       </div>
 
       <!-- Right: hero image -->
@@ -63,34 +75,38 @@ import Line from '../components/Line.astro';
           loading="eager"
         />
       </div>
-
     </div>
-
   </section>
 </BaseLayout>
 
 <script>
-  import { springLift, lineDraw, imageReveal } from '../utils/animations';
+  import { springLift, lineDraw, imageReveal } from "../utils/animations";
 
   function initCPAnimations() {
-    const titleSection = document.querySelector<HTMLElement>('[data-animate="cp-title"]');
+    const titleSection = document.querySelector<HTMLElement>(
+      '[data-animate="cp-title"]',
+    );
     if (titleSection) springLift(titleSection, { delay: 0.1 });
 
-    const divider = document.querySelector<HTMLElement>('.cp__divider [data-line]');
+    const divider = document.querySelector<HTMLElement>(
+      ".cp__divider [data-line]",
+    );
     if (divider) lineDraw(divider);
 
-    const dividerDesktop = document.querySelector<HTMLElement>('.cp__divider-desktop [data-line]');
+    const dividerDesktop = document.querySelector<HTMLElement>(
+      ".cp__divider-desktop [data-line]",
+    );
     if (dividerDesktop) lineDraw(dividerDesktop, { delay: 0.5 });
 
-    document.querySelectorAll<HTMLElement>('.cp__table').forEach((table, i) => {
+    document.querySelectorAll<HTMLElement>(".cp__table").forEach((table, i) => {
       springLift(table, { y: 20, duration: 0.7, delay: 0.45 + i * 0.1 });
     });
 
-    const imageWrap = document.querySelector<HTMLElement>('.cp__image-wrap');
+    const imageWrap = document.querySelector<HTMLElement>(".cp__image-wrap");
     if (imageWrap) imageReveal(imageWrap);
   }
 
-  document.addEventListener('astro:page-load', initCPAnimations);
+  document.addEventListener("astro:page-load", initCPAnimations);
 </script>
 
 <style>
@@ -161,8 +177,8 @@ import Line from '../components/Line.astro';
   }
 
   .cp__table-header {
-    font-size: var(--scale-6);       /* 21px */
-    line-height: var(--scale-7);     /* 34px */
+    font-size: var(--scale-6); /* 21px */
+    line-height: var(--scale-7); /* 34px */
     font-weight: 700;
     text-transform: capitalize;
     padding: var(--scale-6) var(--scale-4) var(--scale-3);
@@ -173,11 +189,18 @@ import Line from '../components/Line.astro';
   }
 
   .cp__table-value {
-    font-size: var(--scale-6);       /* 21px */
+    font-size: var(--scale-6); /* 21px */
     line-height: var(--scale-6);
     font-weight: 400;
     white-space: nowrap;
     transition: opacity 0.15s ease;
+  }
+
+  .cp__table-value--address {
+    font-size: var(--scale-5); /* 13px */
+    line-height: var(--scale-6); /* 21px */
+    font-style: normal;
+    white-space: normal;
   }
 
   a.cp__table-value:hover {
@@ -249,7 +272,9 @@ import Line from '../components/Line.astro';
       flex: unset;
     }
 
-    .cp { flex: unset; }
+    .cp {
+      flex: unset;
+    }
   }
 
   /* ── Mobile ── */

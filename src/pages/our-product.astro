@@ -5,6 +5,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import productHero from "../assets/images/product-hero.webp";
+import silaraScanner from "../assets/images/silara_scanner.jpeg";
 ---
 
 <BaseLayout
@@ -83,7 +84,16 @@ import productHero from "../assets/images/product-hero.webp";
 
           <div class="product__table-row">
             <div class="product__table-label">Order</div>
-            <div class="product__table-value">Message us at +91 7439285007</div>
+            <div class="product__table-value">
+              <button
+                type="button"
+                class="product__scan-btn"
+                id="product-scan-open"
+                aria-label="Scan QR code to order"
+              >
+                <strong>Scan Here</strong>
+              </button>
+            </div>
           </div>
           <div class="product__table-line" data-table-line aria-hidden="true">
           </div>
@@ -98,7 +108,7 @@ import productHero from "../assets/images/product-hero.webp";
     id="product-lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Product image"
+    aria-label="Product image and scanner"
     aria-hidden="true"
   >
     <div class="product__lightbox-stage">
@@ -106,6 +116,14 @@ import productHero from "../assets/images/product-hero.webp";
         src={productHero}
         alt="Silara makhana pouch packaging full view"
         class="product__lightbox-img"
+        id="lightbox-hero-img"
+        loading="lazy"
+      />
+      <Image
+        src={silaraScanner}
+        alt="Silara QR code scanner to order"
+        class="product__lightbox-img product__lightbox-qr"
+        id="lightbox-qr-img"
         loading="lazy"
       />
     </div>
@@ -120,7 +138,7 @@ import productHero from "../assets/images/product-hero.webp";
     <button
       class="product__lightbox-close-btn"
       id="product-lightbox-close"
-      aria-label="Close product image">Close</button
+      aria-label="Close modal">Close</button
     >
   </div>
 </BaseLayout>
@@ -170,9 +188,14 @@ import productHero from "../assets/images/product-hero.webp";
     const openBtn = document.getElementById(
       "product-lightbox-open",
     ) as HTMLButtonElement | null;
+    const scanBtn = document.getElementById(
+      "product-scan-open",
+    ) as HTMLButtonElement | null;
     const lightbox = document.getElementById("product-lightbox");
     const closeWrap = document.getElementById("product-lightbox-close-wrap");
     const closeBtn = document.getElementById("product-lightbox-close");
+    const heroImg = document.getElementById("lightbox-hero-img");
+    const qrImg = document.getElementById("lightbox-qr-img");
     const menuBtnBot = document.getElementById(
       "menu-toggle-bottom",
     ) as HTMLButtonElement | null;
@@ -182,9 +205,21 @@ import productHero from "../assets/images/product-hero.webp";
       ? (Array.from(headerInner.children) as HTMLElement[])
       : [];
 
-    if (!openBtn || !lightbox || !closeWrap || !closeBtn) return;
+    let activeTrigger: HTMLElement | null = null;
 
-    function openLightbox() {
+    if (!lightbox || !closeWrap || !closeBtn) return;
+
+    function openLightbox(mode: "product" | "qr", triggerEl?: HTMLElement | null) {
+      activeTrigger = triggerEl || null;
+
+      if (mode === "qr") {
+        if (heroImg) heroImg.style.display = "none";
+        if (qrImg) qrImg.style.display = "block";
+      } else {
+        if (heroImg) heroImg.style.display = "block";
+        if (qrImg) qrImg.style.display = "none";
+      }
+
       lightbox!.classList.add("is-open");
       lightbox!.setAttribute("aria-hidden", "false");
       closeWrap!.classList.add("is-visible");
@@ -195,18 +230,16 @@ import productHero from "../assets/images/product-hero.webp";
         if (i > 0) el.style.visibility = "hidden";
       });
       if (menuBtnBot) menuBtnBot.style.visibility = "hidden";
-      // Lightbox image: spring-physics wipe + inner drift
-      const lbImg = lightbox!.querySelector<HTMLElement>(
-        ".product__lightbox-img",
-      );
-      if (lbImg && !prefersReducedMotion()) {
+
+      const targetImg = (mode === "qr" ? qrImg : heroImg) as HTMLElement | null;
+      if (targetImg && !prefersReducedMotion()) {
         animate(
-          lbImg,
+          targetImg,
           { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] },
           { duration: 0.65, easing: EASE_OUT },
         );
         animate(
-          lbImg,
+          targetImg,
           { scale: [1.05, 1.0], y: [15, 0] },
           { duration: 0.9, easing: SPRING },
         );
@@ -223,10 +256,18 @@ import productHero from "../assets/images/product-hero.webp";
       document.documentElement.removeAttribute("data-lightbox-open");
       headerChildren.forEach((el) => (el.style.visibility = ""));
       if (menuBtnBot) menuBtnBot.style.visibility = "";
-      openBtn!.focus();
+      if (activeTrigger) {
+        activeTrigger.focus();
+      }
     }
 
-    openBtn.addEventListener("click", openLightbox);
+    if (openBtn) {
+      openBtn.addEventListener("click", () => openLightbox("product", openBtn));
+    }
+    if (scanBtn) {
+      scanBtn.addEventListener("click", () => openLightbox("qr", scanBtn));
+    }
+
     closeBtn.addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", (e) => {
       if (

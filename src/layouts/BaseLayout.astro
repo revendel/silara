@@ -7,6 +7,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MenuOverlay from '../components/MenuOverlay.astro';
+import ScannerModal from '../components/ScannerModal.astro';
 import Logo from '../components/Logo.astro';
 import '../styles/global.css';
 
@@ -98,6 +99,9 @@ const ogImageURL   = new URL(ogImage, Astro.site);
 
     <!-- Mobile / tablet slide-in nav overlay -->
     <MenuOverlay />
+
+    <!-- Global QR Scanner Modal -->
+    <ScannerModal />
 
     <!-- Mobile bottom nav bar: logo icon left, pill button right -->
     <div class="mobile-bottom-nav">

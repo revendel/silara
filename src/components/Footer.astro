@@ -19,12 +19,15 @@ import Logo from "./Logo.astro";
   <nav class="site-footer__links" aria-label="Footer navigation">
     <ul class="site-footer__link-list" role="list">
       <li>
-        <a
-          href="https://wa.me/917439285007"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="site-footer__link">Order at +91 8282 92 6852</a
+        <button
+          type="button"
+          class="site-footer__link"
+          id="footer-scan-open"
+          data-open-scanner
+          aria-label="Scan QR code to order"
         >
+          Scan Here to Order
+        </button>
       </li>
       <li><a href="/terms" class="site-footer__link">T&amp;C</a></li>
       <li><a href="/privacy" class="site-footer__link">Privacy</a></li>
@@ -70,7 +73,8 @@ import Logo from "./Logo.astro";
     transition: opacity 0.15s ease;
   }
 
-  a.site-footer__link:hover {
+  a.site-footer__link:hover,
+  button.site-footer__link:hover {
     opacity: 0.5;
   }
 

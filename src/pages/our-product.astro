@@ -5,7 +5,6 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import productHero from "../assets/images/product-hero.webp";
-import silaraScanner from "../assets/images/silara_scanner.jpeg";
 ---
 
 <BaseLayout
@@ -89,6 +88,7 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
                 type="button"
                 class="product__scan-btn"
                 id="product-scan-open"
+                data-open-scanner
                 aria-label="Scan QR code to order"
               >
                 <strong>Scan Here</strong>
@@ -102,13 +102,13 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
     </div>
   </section>
 
-  <!-- Lightbox overlay -->
+  <!-- Product Image Lightbox overlay -->
   <div
     class="product__lightbox"
     id="product-lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Product image and scanner"
+    aria-label="Product image"
     aria-hidden="true"
   >
     <div class="product__lightbox-stage">
@@ -117,13 +117,6 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
         alt="Silara makhana pouch packaging full view"
         class="product__lightbox-img"
         id="lightbox-hero-img"
-        loading="lazy"
-      />
-      <Image
-        src={silaraScanner}
-        alt="Silara QR code scanner to order"
-        class="product__lightbox-img product__lightbox-qr"
-        id="lightbox-qr-img"
         loading="lazy"
       />
     </div>
@@ -188,14 +181,10 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
     const openBtn = document.getElementById(
       "product-lightbox-open",
     ) as HTMLButtonElement | null;
-    const scanBtn = document.getElementById(
-      "product-scan-open",
-    ) as HTMLButtonElement | null;
     const lightbox = document.getElementById("product-lightbox");
     const closeWrap = document.getElementById("product-lightbox-close-wrap");
     const closeBtn = document.getElementById("product-lightbox-close");
     const heroImg = document.getElementById("lightbox-hero-img");
-    const qrImg = document.getElementById("lightbox-qr-img");
     const menuBtnBot = document.getElementById(
       "menu-toggle-bottom",
     ) as HTMLButtonElement | null;
@@ -209,16 +198,8 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
 
     if (!lightbox || !closeWrap || !closeBtn) return;
 
-    function openLightbox(mode: "product" | "qr", triggerEl?: HTMLElement | null) {
+    function openLightbox(triggerEl?: HTMLElement | null) {
       activeTrigger = triggerEl || null;
-
-      if (mode === "qr") {
-        if (heroImg) heroImg.style.display = "none";
-        if (qrImg) qrImg.style.display = "block";
-      } else {
-        if (heroImg) heroImg.style.display = "block";
-        if (qrImg) qrImg.style.display = "none";
-      }
 
       lightbox!.classList.add("is-open");
       lightbox!.setAttribute("aria-hidden", "false");
@@ -231,15 +212,14 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
       });
       if (menuBtnBot) menuBtnBot.style.visibility = "hidden";
 
-      const targetImg = (mode === "qr" ? qrImg : heroImg) as HTMLElement | null;
-      if (targetImg && !prefersReducedMotion()) {
+      if (heroImg && !prefersReducedMotion()) {
         animate(
-          targetImg,
+          heroImg,
           { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] },
           { duration: 0.65, easing: EASE_OUT },
         );
         animate(
-          targetImg,
+          heroImg,
           { scale: [1.05, 1.0], y: [15, 0] },
           { duration: 0.9, easing: SPRING },
         );
@@ -262,10 +242,7 @@ import silaraScanner from "../assets/images/silara_scanner.jpeg";
     }
 
     if (openBtn) {
-      openBtn.addEventListener("click", () => openLightbox("product", openBtn));
-    }
-    if (scanBtn) {
-      scanBtn.addEventListener("click", () => openLightbox("qr", scanBtn));
+      openBtn.addEventListener("click", () => openLightbox(openBtn));
     }
 
     closeBtn.addEventListener("click", closeLightbox);

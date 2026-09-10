@@ -84,15 +84,14 @@ import productHero from "../assets/images/product-hero.webp";
           <div class="product__table-row">
             <div class="product__table-label">Order</div>
             <div class="product__table-value">
-              <button
-                type="button"
-                class="product__scan-btn"
-                id="product-scan-open"
-                data-open-scanner
-                aria-label="Scan QR code to order"
+              <a
+                href="https://store.silara.org/"
+                class="product__order-link"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <strong>Scan Here</strong>
-              </button>
+                <strong>Claim Offer</strong>
+              </a>
             </div>
           </div>
           <div class="product__table-line" data-table-line aria-hidden="true">
@@ -351,6 +350,15 @@ import productHero from "../assets/images/product-hero.webp";
     padding: var(--scale-5) var(--scale-4);
     font-size: 16px;
     font-weight: 400;
+  }
+
+  .product__order-link {
+    display: inline-block;
+    transition: opacity 0.15s ease;
+  }
+
+  .product__order-link:hover {
+    opacity: 0.5;
   }
 
   /* ── Fluid desktop (1024–1439px) ── */
